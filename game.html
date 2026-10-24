@@ -51,7 +51,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.13.0 · Gigantium</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.14.0 · Tæt tackling</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -127,7 +127,7 @@ function nearDot(x,y,only){let b=null,bd=1e9;for(let i=0;i<8;i++){if(only=='end'
 function whistle(msg,dot,t){if(S.mode!='play')return;S.mode='whistle';S.t=t||80;S.msg=msg;S.msgT=t||80;S.fo=dot;puck.owner=null;puck.target=null;sfx.whistle()}
 function placeFO(dx,dy){puck.owner=null;puck.net=null;puck.target=null;puck.tgT=0;puck.x=dx;puck.y=dy;puck.z=puck.vx=puck.vy=puck.vz=0;puck.ice=[false,false];puck.lastP=null;
  for(const t of[0,1]){const d=TM[t].dir,pos={C:[-8,0],LW:[-26,-52],RW:[-26,52],LD:[-46,-26],RD:[-46,26]};
-  for(const p of sk(t)){const[al,la]=pos[p.role],lat=la*(d>0?1:-1);p.x=clamp(dx+d*al,16,RL-16);p.y=clamp(dy+lat,13,RW-13);p.vx=p.vy=0;p.fa=d>0?0:PI;p.stun=p.cool=p.chk=p.hold=0;p.fb=0;p.ix=p.iy=0}
+  for(const p of sk(t)){const[al,la]=pos[p.role],lat=la*(d>0?1:-1);p.x=clamp(dx+d*al,16,RL-16);p.y=clamp(dy+lat,13,RW-13);p.vx=p.vy=0;p.fa=d>0?0:PI;p.stun=p.cool=p.chk=p.hold=0;p.fb=0;p.hitCd=0;p.hitBoost=0;p.hitT=null;p.ix=p.iy=0}
   const gd=goal(t),G=TM[t].gk;G.x=gd.gx+gd.face*5;G.y=CY;G.vx=G.vy=0;G.fa=d>0?0:PI}
  REF.x=dx;REF.y=clamp(dy+34,14,RW-14);REF.vx=REF.vy=0;ctl[0]=ctl[1]=null;S.mode='faceoff';S.t=75;S.msg='FACE-OFF';S.msgT=75}
 function dropPuck(){const w=rr(2),d=TM[w].dir;puck.vx=-d*(1.3+rnd()*.7);puck.vy=(rnd()-.5)*.9;const lc=sk(1-w).find(p=>p.role=='C');lc.cool=16;S.mode='play';S.msg='';sfx.shot()}
@@ -239,11 +239,11 @@ function aiCarrier(p){const t=p.t,d=TM[t].dir,gx=atkX(t),dg=hyp(gx-p.x,CY-p.y),u
   if(pressed&&u<.4){const wy=p.y<CY?20:RW-20;shoot(p,.35,[p.x+d*160,wy]);return}
   if(inRange&&rnd()<.3){shoot(p,.6+rnd()*.4,goalPoint(p,1));return}}}
 function doCheck(p,hum){if(p.chkCd>0||p.stun>0)return;p.chk=12;p.chkCd=45;if(!hum)return;
- let t=null,bd=46;for(const e of sk(1-p.t)){const d=hyp(e.x-p.x,e.y-p.y)-(puck.owner===e?14:0);if(d<bd){bd=d;t=e}}
- p.hitT=t;p.chk=22;p.chkCd=28;p.hitBoost=22}
+ let t=null,bd=1e9;for(const e of sk(1-p.t)){const d=hyp(e.x-p.x,e.y-p.y),r=puck.owner===e?22:17;if(d<r&&d-(puck.owner===e?6:0)<bd){bd=d;t=e}}
+ p.hitT=t;p.chk=t?10:8;p.chkCd=28;p.hitBoost=t?10:0}
 /* a human hit that connects: knock the opponent down and the puck loose */
 function landHit(H,V){V.hitCd=30;V.stun=34;const a=Math.atan2(V.y-H.y,V.x-H.x);V.vx+=Math.cos(a)*2.2;V.vy+=Math.sin(a)*2.2;H.vx*=.4;H.vy*=.4;H.hitBoost=0;H.hitT=null;
- if(puck.owner===V){puck.owner=null;puck.vx=V.vx*.8+(rnd()-.5);puck.vy=V.vy*.8+(rnd()-.5);puck.lastT=H.t;puck.ice=[false,false];V.cool=28}sfx.hit()}
+ if(puck.owner===V){V.cool=28;H.cool=0;setOwner(H)}sfx.hit()}
 /* ---------- human ---------- */
 function pickCtl(){for(const t of[0,1]){if(OPT.auto||(t==1&&!OPT.two)){ctl[t]=null;continue}
  if(puck.owner&&puck.owner.t==t&&!puck.owner.gk){ctl[t]=puck.owner;continue}
@@ -269,7 +269,7 @@ function movePlayer(p){if(p.hitCd>0)p.hitCd--;if(p.hitBoost>0)p.hitBoost--;if(p.
  const m=hyp(p.ix,p.iy),rate=m>.1?(p.stun>0?0:.085):.02;p.vx+=(tx-p.vx)*rate;p.vy+=(ty-p.vy)*rate;
  const s=hyp(p.vx,p.vy);if(s>2.6){p.vx*=2.6/s;p.vy*=2.6/s}
  // homing lunge towards the hit target
- if(p.hitBoost>0&&p.hitT&&p.stun<=0){const t=p.hitT,dx=t.x-p.x,dy=t.y-p.y,d=hyp(dx,dy)||1;p.fa=Math.atan2(dy,dx);p.vx=dx/d*3.3;p.vy=dy/d*3.3;if(d<12&&t.hitCd<=0&&S.mode=='play')landHit(p,t)}
+ if(p.hitBoost>0&&p.hitT&&p.stun<=0){const t=p.hitT,dx=t.x-p.x,dy=t.y-p.y,d=hyp(dx,dy)||1;p.fa=Math.atan2(dy,dx);p.vx=dx/d*2.6;p.vy=dy/d*2.6;if(d>30){p.hitBoost=0;p.hitT=null}else if(d<12&&t.hitCd<=0&&S.mode=='play')landHit(p,t)}
  p.x+=p.vx;p.y+=p.vy;
  if(m>.1||s>.5){const ta=m>.1?Math.atan2(p.iy,p.ix):Math.atan2(p.vy,p.vx);let da=ta-p.fa;while(da>PI)da-=2*PI;while(da<-PI)da+=2*PI;p.fa+=clamp(da,-.2,.2)}
  const nh=rinkClamp(p,5);if(nh){const vn=p.vx*nh[0]+p.vy*nh[1];if(vn<0){p.vx-=vn*nh[0];p.vy-=vn*nh[1];p.vx*=.9;p.vy*=.9}}
