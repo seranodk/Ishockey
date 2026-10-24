@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.10.0**
+**Aktuel version: Ishockey 0.11.0**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -15,6 +15,11 @@ Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i brows
 - Turneringen bliver gemt i browseren, så du kan fortsætte senere. Begge turneringer kan køre på samme tid.
 
 I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fantasihold) og derefter holdene.
+
+## Arenaer og publikum
+- Publikum er hjemmeholdets fans i hjemmeholdets farver. Udeholdets fans sidder i en lille blok i et hjørne.
+- Når hjemmeholdet scorer, rejser hjemmefansene sig og jubler med arme og halstørklæder. Når udeholdet scorer, er det kun udebaneblokken, der jubler.
+- **Gigantium (Sparekassen Danmark Arena):** Når Aalborg Pirates spiller hjemme, foregår kampen i Gigantium. Den har to lange tribuner langs siderne med trappegange, mørke endevægge med arenaens navn, og man kan se banens runde hjørner.
 
 ## Styring
 - **Mobil:** Træk i venstre side for at skøjte. Den store knap **SKYD/TJEK** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken tjekker den modstanderen. Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
@@ -29,6 +34,11 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x**. En større ændring hæver første x, en mindre ændring hæver andet x.
+
+### Ishockey 0.11.0
+- Publikum er hjemmeholdets fans i hjemmeholdets farver, med en lille udebaneblok.
+- Kun fansene til det hold, der scorer, jubler.
+- Gigantium-arenaen, når Aalborg Pirates spiller hjemme.
 
 ### Ishockey 0.10.0
 - Ny knapfordeling. Skudknappen bruges kun til at skyde, når du har pucken, og til at tjekke, når du ikke har den.

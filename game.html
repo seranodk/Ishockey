@@ -51,7 +51,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD<br>TJEK</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.10.0</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.11.0</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd/tjek, - pass<br>SP2: WASD + F skyd/tjek, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -324,10 +324,37 @@ function buildRink(){const[c,x]=mkc(IW,IH);x.translate(PX,PY);
  for(const[gx,f]of[[GLN,1],[RL-GLN,-1]]){const x0=f>0?gx-ND:gx;x.fillStyle='#f1f1f1';x.fillRect(x0,CY-GWH,ND,GWH*2);x.fillStyle='#bfc7d2';for(let i=0;i<GWH*2;i+=2)for(let j=0;j<ND;j+=2)if((i+j)%4==0)x.fillRect(x0+j,CY-GWH+i,1,1);x.fillStyle='#d6001c';x.fillRect(x0,CY-GWH-1,ND,2);x.fillRect(x0,CY+GWH-1,ND,2);x.fillRect(f>0?gx-ND:gx+ND-2,CY-GWH,2,GWH*2);x.fillRect(gx-1,CY-GWH-2,3,3);x.fillRect(gx-1,CY+GWH-1,3,3)}
  // rotate 90 degrees so the rink runs vertically (pixel exact)
  const[rc,rx]=mkc(IH,IW);rx.translate(0,IW);rx.rotate(-PI/2);rx.drawImage(c,0,0);ICE=rc}
-function buildStands(){for(let f=0;f<2;f++){const[c,x]=mkc(WW,WH);x.fillStyle='#10132e';x.fillRect(0,0,WW,WH);const cols=[TM[0].kit.j,TM[1].kit.j,'#e6e6e6','#3b3f6b','#c9a23a','#2b7a52'],skin=['#f0c8a0','#d9a070','#a8703c','#6b4226'],hair=['#111','#3a2410','#caa24a','#8a8a8a'];
-  const rows=(x0,y0,w,h,seed)=>{x.fillStyle='#1c2050';x.fillRect(x0,y0,w,h);let rs=seed;const R=()=>(rs=(rs*9301+49297)%233280)/233280;
-   for(let yy=y0;yy<y0+h-4;yy+=5){x.fillStyle='#262b66';x.fillRect(x0,yy+4,w,1);for(let xx=x0+1;xx<x0+w-3;xx+=4){if(R()<.12)continue;const sh=cols[Math.floor(R()*cols.length)],bob=(f&&R()<.5)?-1:0;x.fillStyle=sh;x.fillRect(xx,yy+2+bob,3,3);x.fillStyle=R()<.5?skin[Math.floor(R()*4)]:hair[Math.floor(R()*4)];x.fillRect(xx,yy+bob,3,2)}}};
-  rows(PY-8,2,RW+16,PX-14,11);rows(PY-8,PX+RL+12,RW+16,PX-14,23);rows(2,PX-10,PY-14,RL+20,5);rows(PY+RW+12,PX-10,PY-14,RL+20,7);STANDS[f]=c}}
+/* crowd: 3 frames. 0 = seated, 1 = home fans on their feet (arms and scarves up), 2 = the away section on its feet.
+   Most seats are home fans in the home kit; a small away block sits in one corner. */
+function arenaOf(){return LG=='dk'&&TM[0].club&&TM[0].club[1]=='AAL'?'gig':'std'}
+function buildStands(){const AR=arenaOf(),H=TM[0].kit,A=TM[1].kit,skin=['#f0c8a0','#d9a070','#a8703c','#6b4226'],hair=['#111','#3a2410','#caa24a','#8a8a8a'],neu=['#e6e6e6','#3b3f6b','#6b6f80'];
+ const seat=AR=='gig'?'#24242c':'#1c2050',seatL=AR=='gig'?'#33333d':'#262b66';
+ for(let f=0;f<3;f++){const[c,x]=mkc(WW,WH);x.fillStyle=AR=='gig'?'#0b0b10':'#10132e';x.fillRect(0,0,WW,WH);
+  // block of seats; aw(xx,yy) tells whether a seat is in the away section
+  const rows=(x0,y0,w,h,seed,aw,aisle)=>{x.fillStyle=seat;x.fillRect(x0,y0,w,h);let rs=seed;const R=()=>(rs=(rs*9301+49297)%233280)/233280;
+   for(let yy=y0;yy<y0+h-4;yy+=5){if(aisle&&((yy-y0)%aisle)<5){x.fillStyle='#4a4d58';x.fillRect(x0,yy,w,5);x.fillStyle='#5d616d';x.fillRect(x0,yy+2,w,1);continue}x.fillStyle=seatL;x.fillRect(x0,yy+4,w,1);
+    for(let xx=x0+1;xx<x0+w-3;xx+=4){
+     const r0=R(),r1=R(),r2=R(),r3=R(),r4=R();if(r0<.08)continue;
+     const away=aw(xx,yy),neutral=!away&&r1<.1,team=away?'A':neutral?'N':'H',K=away?A:H;
+     const shirt=neutral?neu[Math.floor(r2*neu.length)]:(r2<.65?K.j:K.t),scarf=K.t==shirt?K.j:K.t;
+     const up=(f==1&&team=='H')||(f==2&&team=='A'),b=up?-1:0;
+     x.fillStyle=shirt;x.fillRect(xx,yy+2+b,3,3);
+     x.fillStyle=r3<.5?skin[Math.floor(r4*4)]:hair[Math.floor(r4*4)];x.fillRect(xx,yy+b,3,2);
+     if(up){if(r3<.4){x.fillStyle=scarf;x.fillRect(xx-1,yy-2,5,1)}else{x.fillStyle=skin[Math.floor(r4*4)];x.fillRect(xx,yy-2,1,1);x.fillRect(xx+2,yy-2,1,1)}}}}};
+  const L=[2,PX-10,PY-14,RL+20],Rt=[PY+RW+12,PX-10,PY-14,RL+20];
+  if(AR=='gig'){
+   // two long tribunes (hanging tribune along both sides), dark end walls with arena signs
+   const awG=(xx,yy)=>xx>WW/2&&yy<PX+150;
+   rows(L[0],L[1],L[2],L[3],5,awG,80);rows(Rt[0],Rt[1],Rt[2],Rt[3],7,awG,80);
+   for(const X of[L[0]+L[2],Rt[0]-2]){x.fillStyle='#c9ccd6';x.fillRect(X,L[1],2,L[3])}
+   for(const[Y,t]of[[8,'SPAREKASSEN DANMARK ARENA'],[WH-26,'GIGANTIUM']]){x.fillStyle='#16161e';x.fillRect(PY-8,Y-4,RW+16,18);x.fillStyle='#c8102e';x.fillRect(PY-8,Y+12,RW+16,2);
+    const w=t.length*8;ptxtS(x,t,WW/2-w/2,Y,'#f2f2f2',2)}
+   x.fillStyle='#c8102e';x.fillRect(PY-8,PX-16,RW+16,2);x.fillRect(PY-8,PX+RL+14,RW+16,2);
+  }else{
+   const awS=(xx,yy)=>xx>WW-PY&&yy<PX+120||yy<PX-12&&xx>WW-120;
+   rows(PY-8,2,RW+16,PX-14,11,awS);rows(PY-8,PX+RL+12,RW+16,PX-14,23,awS);rows(L[0],L[1],L[2],L[3],5,awS);rows(Rt[0],Rt[1],Rt[2],Rt[3],7,awS)}
+  STANDS[f]=c}}
+function ptxtS(x,s,X,Y,c,k){x.fillStyle=c;let cx=X;for(const ch of s){const gl=GL[ch];if(gl)for(let i=0;i<15;i++)if(gl[i]=='1')x.fillRect(cx+(i%3)*k,Y+((i/3)|0)*k,k,k);cx+=4*k}}
 /* ---------- render: sprites (screen space) ---------- */
 function line(x0,y0,x1,y1,c,tipc){x0=Math.round(x0);y0=Math.round(y0);x1=Math.round(x1);y1=Math.round(y1);const dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1;let e=dx+dy,n=0;const pts=[];for(;;){pts.push([x0,y0]);if(x0==x1&&y0==y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx}if(e2<=dx){e+=dx;y0+=sy}if(++n>80)break}
  pts.forEach((p,i)=>{g.fillStyle=i>=pts.length-2?(tipc||c):c;g.fillRect(p[0],p[1],1,1)})}
@@ -362,7 +389,7 @@ function markOf(e){if(ctl[0]===e)return'p1';if(OPT.two&&ctl[1]===e)return'p2';if
 function draw(){const sx=shake>.3?Math.round((rnd()-.5)*shake):0,sy=shake>.3?Math.round((rnd()-.5)*shake):0;
  g.fillStyle='#10132e';g.fillRect(0,0,VW,VH);
  if(!ICE)buildRink();
- const fr=S.celeb>0?(S.cf>>2)&1:(S.cf>>4)&1;const wx=-Math.round(camX)+sx,wy=-Math.round(camY)+sy;
+ const fr=S.celeb>0&&S.goalBy>=0&&(S.cf>>3)&1?(S.goalBy==0?1:2):0;const wx=-Math.round(camX)+sx,wy=-Math.round(camY)+sy;
  g.drawImage(STANDS[fr]||STANDS[0],wx,wy);g.drawImage(ICE,wx,wy);
  // goal light + net glow behind the net
  if(S.flash>0&&S.cf%12<7){for(const t of[0,1]){if(S.goalBy!=1-t)continue;const gd=goal(t),a=toS(gd.x1,gd.y0),b=toS(gd.x0,gd.y1),lp=toS(gd.face>0?gd.x0-4:gd.x1+4,CY);
@@ -492,7 +519,7 @@ $('btnFS').addEventListener('click',toggleFS);
 if('serviceWorker' in navigator&&location.protocol==='https:'&&document.querySelector('link[rel="manifest"]')){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 let last=0,acc=0;function loop(n){const dt=Math.min(100,n-last);last=n;if(S.mode!='menu'&&!S.paused){acc+=dt;while(acc>=16.667){update();acc-=16.667}}else acc=0;if(S.mode!='menu')draw();requestAnimationFrame(loop)}
 fill();lab();fit();newTeams(0,1);buildRink();setDirs();placeFO(RL/2,CY);S.mode='menu';
-window.__H={S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY}};
+window.__H={arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY}};
 requestAnimationFrame(loop);
 })();
 </script>
