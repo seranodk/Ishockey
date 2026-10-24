@@ -2,10 +2,19 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.8.0**
+**Aktuel version: Ishockey 0.9.0**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
+
+## Turneringer
+- **Metal Ligaen · DM-slutspil:** 8 af de 9 danske hold spiller knockout med kvartfinale, semifinale og finale.
+- **NHL · Stanley Cup:** 16 af de 32 NHL-hold spiller knockout over fire runder, med Stanley Cup-finalen til sidst.
+- Vælg dit hold og spil én kamp ad gangen. De andre kampe i runden bliver afgjort automatisk. Taber du, er du ude.
+- Uafgjort afgøres i sudden death-overtid: første mål vinder.
+- Turneringen bliver gemt i browseren, så du kan fortsætte senere. Begge turneringer kan køre på samme tid.
+
+I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fantasihold) og derefter holdene.
 
 ## Styring
 - **Mobil:** Træk i venstre side for at skøjte. **SKYD/PASS:** et kort tryk afleverer, hold knappen inde og slip for at skyde. **TJEK:** tackling.
@@ -16,10 +25,17 @@ Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i brows
 - Den spiller, du styrer, har en grøn ring. Modstanderen med pucken har en grå skygge.
 
 ## Indstillinger
-Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offside til eller fra · Lyd.
+Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offside (slået fra som standard) · Lyd.
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x**. En større ændring hæver første x, en mindre ændring hæver andet x.
+
+### Ishockey 0.9.0
+- Holdene fra Metal Ligaen og NHL er med, i klubbernes farver.
+- To turneringer: DM-slutspil med Metal Ligaen-holdene og Stanley Cup med NHL-holdene.
+- Ligavalg i Kamp og 2 spillere. De gamle fantasihold er stadig med.
+- Overtid er nu sudden death, og første mål vinder. I turneringer fortsætter overtiden, til der er en vinder.
+- Icing og offside er slået fra som standard.
 
 ### Ishockey 0.8.0
 - Nye taster til 2 spillere på ét tastatur, som også findes på et Mac-tastatur uden numerisk tastatur. Spiller 1: piletaster, . og -. Spiller 2: WASD, F og G.
