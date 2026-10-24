@@ -65,7 +65,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.12.0</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.13.0 · Gigantium</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -127,7 +127,7 @@ const ROLES=['LD','RD','C','LW','RW'],NUMS={G:31,LD:4,RD:6,C:19,LW:12,RW:22};
 function mk(t,role){return{t,role,gk:role=='G',x:0,y:0,vx:0,vy:0,fa:0,ix:0,iy:0,cool:0,stun:0,chk:0,chkCd:0,hold:0,fb:0,ph:rnd()*6,dt:0,hitCd:0,num:NUMS[role]}}
 function newTeams(a,b){const C=CL(),A=C[a],B=C[b];TM[0].club=A;TM[1].club=B;TM[0].kit=kitOf(A,false);const k=kitOf(B,false);TM[1].kit=cd(TM[0].kit.j,k.j)<120?kitOf(B,true):k;if(cd(TM[0].kit.j,TM[1].kit.j)<120)TM[1].kit=kitOf(B,true);
  for(const t of[0,1]){TM[t].sk=ROLES.map(r=>mk(t,r));TM[t].gk=mk(t,'G')}ALL=[...TM[0].sk,TM[0].gk,...TM[1].sk,TM[1].gk];
- REF={x:RL/2,y:CY,vx:0,vy:0,fa:0,ph:0};buildStands()}
+ REF={x:RL/2,y:CY,vx:0,vy:0,fa:0,ph:0};ICE=null;buildStands()}
 const sk=t=>TM[t].sk;
 const blade=p=>{const a=p.fa+.55;return[p.x+Math.cos(a)*9,p.y+Math.sin(a)*9]};
 /* ---------- geometry ---------- */
@@ -325,12 +325,13 @@ function mkc(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;
 function rrp(x,X,Y,w,h,r,col){x.fillStyle=col;for(let yy=0;yy<h;yy++){let ins=0;if(yy<r){const dy=r-yy-.5;ins=r-Math.sqrt(Math.max(0,r*r-dy*dy))}else if(yy>=h-r){const dy=yy-(h-r)+.5;ins=r-Math.sqrt(Math.max(0,r*r-dy*dy))}ins=Math.round(ins);x.fillRect(X+ins,Y+yy,w-2*ins,1)}}
 function circ(x,cx,cy,r,col,a0,a1){x.fillStyle=col;const n=Math.ceil(r*7);for(let i=0;i<=n;i++){const a=a0+(a1-a0)*i/n;x.fillRect(Math.round(cx+Math.cos(a)*r),Math.round(cy+Math.sin(a)*r),1,1)}}
 function ptxt(x,s,X,Y,c){x.fillStyle=c;let cx=X;for(const ch of s){const gl=GL[ch];if(gl)for(let i=0;i<15;i++)if(gl[i]=='1')x.fillRect(cx+(i%3),Y+((i/3)|0),1,1);cx+=4}}
-function buildRink(){const[c,x]=mkc(IW,IH);x.translate(PX,PY);
- rrp(x,-8,-10,RL+16,RW+20,CR+8,'#7c8aa0');rrp(x,-7,-9,RL+14,RW+18,CR+7,'#e9eef4');
- const ads=[['NORDMILK','#d6001c'],['ISPOWER','#0a30f0'],['FROSTBANK','#2f8a14'],['ARCTIC','#f2c200'],['ZAMBONI','#7b3fc4'],['BLAA LINJE','#0e9aa7'],['HOCKEY 24','#ff7a00'],['ISKOLD','#d6001c']];
- for(let i=0,X=CR;X+64<=RL-CR+8;i++,X+=64){const[tx,col]=ads[i%ads.length];for(const Y of[-9,RW+1]){x.fillStyle=col;x.fillRect(X,Y,62,8);x.fillStyle='rgba(0,0,0,.25)';x.fillRect(X,Y+7,62,1);ptxt(x,tx,X+(62-tx.length*4+1>>1),Y+2,col=='#f2c200'?'#111':'#fff')}}
+function buildRink(){const AR=arenaOf(),[c,x]=mkc(IW,IH);x.translate(PX,PY);
+ if(AR=='gig'){rrp(x,-9,-11,RL+18,RW+22,CR+9,'#1f4fb5');rrp(x,-7,-9,RL+14,RW+18,CR+7,'#f4f6f9')}else{rrp(x,-8,-10,RL+16,RW+20,CR+8,'#7c8aa0');rrp(x,-7,-9,RL+14,RW+18,CR+7,'#e9eef4')}
+ const ads=AR=='gig'?[['AALBORG','#f4f6f9'],['PIRATES','#c8102e'],['ISHOCKEY','#f4f6f9'],['GIGANTIUM','#1f4fb5'],['AALBORG','#f4f6f9'],['METAL LIGAEN','#111111'],['PIRATES','#c8102e'],['ISKOLD','#f4f6f9']]:[['NORDMILK','#d6001c'],['ISPOWER','#0a30f0'],['FROSTBANK','#2f8a14'],['ARCTIC','#f2c200'],['ZAMBONI','#7b3fc4'],['BLAA LINJE','#0e9aa7'],['HOCKEY 24','#ff7a00'],['ISKOLD','#d6001c']];
+ for(let i=0,X=CR;X+64<=RL-CR+8;i++,X+=64){const[tx,col]=ads[i%ads.length];for(const Y of[-9,RW+1]){x.fillStyle=col;x.fillRect(X,Y,62,8);x.fillStyle='rgba(0,0,0,.25)';x.fillRect(X,Y+7,62,1);ptxt(x,tx,X+(62-tx.length*4+1>>1),Y+2,col=='#f2c200'||col=='#f4f6f9'?'#1b2a6b':'#fff')}}
  const[tc,tx]=mkc(RL,RW);rrp(tx,0,0,RL,RW,CR,'#eef4f9');
  tx.globalCompositeOperation='source-atop';
+ if(AR=='gig'){/* big red centre-ice circle like in the arena */for(let yy=-36;yy<=36;yy++){const w=Math.round(Math.sqrt(1296-yy*yy));tx.fillStyle='rgba(176,23,42,.55)';tx.fillRect(RL/2-w,CY+yy,2*w,1)}circ(tx,RL/2,CY,36,'#8a1020',0,7);circ(tx,RL/2,CY,30,'rgba(255,255,255,.6)',0,7)}
  tx.fillStyle='#cc2233';for(const X of[GLN-1,RL-GLN])tx.fillRect(X,0,2,RW);
  for(let y=0;y<RW;y++){tx.fillStyle=(y>>1)%2?'#f3dede':'#cc2233';tx.fillRect(RL/2-2,y,4,1)}
  tx.fillStyle='#2b5fd9';for(const X of[BLN-2,RL-BLN-2])tx.fillRect(X,0,5,RW);
@@ -349,13 +350,14 @@ function buildRink(){const[c,x]=mkc(IW,IH);x.translate(PX,PY);
    Most seats are home fans in the home kit; a small away block sits in one corner. */
 function arenaOf(){return LG=='dk'&&TM[0].club&&TM[0].club[1]=='AAL'?'gig':'std'}
 function buildStands(){const AR=arenaOf(),H=TM[0].kit,A=TM[1].kit,skin=['#f0c8a0','#d9a070','#a8703c','#6b4226'],hair=['#111','#3a2410','#caa24a','#8a8a8a'],neu=['#e6e6e6','#3b3f6b','#6b6f80'];
- const seat=AR=='gig'?'#24242c':'#1c2050',seatL=AR=='gig'?'#33333d':'#262b66';
+ const seat=AR=='gig'?'#1d1e23':'#1c2050',seatL=AR=='gig'?'#2b2c33':'#262b66',stair=AR=='gig'?'#8d9097':'#4a4d58',stairL=AR=='gig'?'#a3a6ad':'#5d616d';
  for(let f=0;f<3;f++){const[c,x]=mkc(WW,WH);x.fillStyle=AR=='gig'?'#0b0b10':'#10132e';x.fillRect(0,0,WW,WH);
   // block of seats; aw(xx,yy) tells whether a seat is in the away section
-  const rows=(x0,y0,w,h,seed,aw,aisle)=>{x.fillStyle=seat;x.fillRect(x0,y0,w,h);let rs=seed;const R=()=>(rs=(rs*9301+49297)%233280)/233280;
-   for(let yy=y0;yy<y0+h-4;yy+=5){if(aisle&&((yy-y0)%aisle)<5){x.fillStyle='#4a4d58';x.fillRect(x0,yy,w,5);x.fillStyle='#5d616d';x.fillRect(x0,yy+2,w,1);continue}x.fillStyle=seatL;x.fillRect(x0,yy+4,w,1);
+  const rows=(x0,y0,w,h,seed,aw,aisle,aisleX,empty)=>{x.fillStyle=seat;x.fillRect(x0,y0,w,h);let rs=seed;const R=()=>(rs=(rs*9301+49297)%233280)/233280;
+   for(let yy=y0;yy<y0+h-4;yy+=5){if(aisle&&((yy-y0)%aisle)<5){x.fillStyle=stair;x.fillRect(x0,yy,w,5);x.fillStyle=stairL;x.fillRect(x0,yy+2,w,1);continue}x.fillStyle=seatL;x.fillRect(x0,yy+4,w,1);
     for(let xx=x0+1;xx<x0+w-3;xx+=4){
-     const r0=R(),r1=R(),r2=R(),r3=R(),r4=R();if(r0<.08)continue;
+     if(aisleX&&((xx-x0)%aisleX)<5){x.fillStyle=stair;x.fillRect(xx-1,yy,5,5);continue}
+     const r0=R(),r1=R(),r2=R(),r3=R(),r4=R();if(r0<(empty||.08))continue;
      const away=aw(xx,yy),neutral=!away&&r1<.1,team=away?'A':neutral?'N':'H',K=away?A:H;
      const shirt=neutral?neu[Math.floor(r2*neu.length)]:(r2<.65?K.j:K.t),scarf=K.t==shirt?K.j:K.t;
      const up=(f==1&&team=='H')||(f==2&&team=='A'),b=up?-1:0;
@@ -364,13 +366,22 @@ function buildStands(){const AR=arenaOf(),H=TM[0].kit,A=TM[1].kit,skin=['#f0c8a0
      if(up){if(r3<.4){x.fillStyle=scarf;x.fillRect(xx-1,yy-2,5,1)}else{x.fillStyle=skin[Math.floor(r4*4)];x.fillRect(xx,yy-2,1,1);x.fillRect(xx+2,yy-2,1,1)}}}}};
   const L=[2,PX-10,PY-14,RL+20],Rt=[PY+RW+12,PX-10,PY-14,RL+20];
   if(AR=='gig'){
-   // two long tribunes (hanging tribune along both sides), dark end walls with arena signs
-   const awG=(xx,yy)=>xx>WW/2&&yy<PX+150;
-   rows(L[0],L[1],L[2],L[3],5,awG,80);rows(Rt[0],Rt[1],Rt[2],Rt[3],7,awG,80);
-   for(const X of[L[0]+L[2],Rt[0]-2]){x.fillStyle='#c9ccd6';x.fillRect(X,L[1],2,L[3])}
-   for(const[Y,t]of[[8,'SPAREKASSEN DANMARK ARENA'],[WH-26,'GIGANTIUM']]){x.fillStyle='#16161e';x.fillRect(PY-8,Y-4,RW+16,18);x.fillStyle='#c8102e';x.fillRect(PY-8,Y+12,RW+16,2);
-    const w=t.length*8;ptxtS(x,t,WW/2-w/2,Y,'#f2f2f2',2)}
-   x.fillStyle='#c8102e';x.fillRect(PY-8,PX-16,RW+16,2);x.fillRect(PY-8,PX+RL+14,RW+16,2);
+   /* Gigantium, from photos: a lower bowl of black seats with light concrete stairs all the way round,
+      a red LED ribbon, and an upper ring behind a glass rail under a dark steel roof. Dannebrog and shirt banners hang at one end. */
+   const awG=(xx,yy)=>xx>WW-130&&yy<130;
+   rows(0,0,WW,WH,3,awG,0,46,.35);                       // upper ring (sparser)
+   x.fillStyle='rgba(0,0,0,.28)';x.fillRect(0,0,WW,WH);  // shade under the roof
+   const o=26,t=8;                                       // ribbon frame
+   x.fillStyle='#9aa3b5';x.fillRect(o-1,t-1,WW-2*o+2,1);x.fillRect(o-1,WH-t,WW-2*o+2,1);x.fillRect(o-1,t-1,1,WH-2*t+2);x.fillRect(WW-o,t-1,1,WH-2*t+2);
+   x.fillStyle='#c8102e';x.fillRect(o,t,WW-2*o,4);x.fillRect(o,WH-t-4,WW-2*o,4);x.fillRect(o,t,4,WH-2*t);x.fillRect(WW-o-4,t,4,WH-2*t);
+   x.fillStyle='#ff4d5e';for(let k=o+6;k<WW-o-6;k+=18){x.fillRect(k,t+1,8,1);x.fillRect(k,WH-t-3,8,1)}for(let k=t+6;k<WH-t-6;k+=18){x.fillRect(o+1,k,1,8);x.fillRect(WW-o-3,k,1,8)}
+   const li=o+4,ti=t+4;                                  // lower bowl
+   rows(li,ti,WW-2*li,PX-14-ti,11,awG,0,48);rows(li,PX+RL+14,WW-2*li,WH-ti-(PX+RL+14),23,awG,0,48);
+   rows(li,PX-14,PY-10-li,RL+28,5,awG,80);rows(PY+RW+10,PX-14,WW-li-(PY+RW+10),RL+28,7,awG,80);
+   x.fillStyle='#c9ccd6';x.fillRect(PY-11,PX-14,1,RL+28);x.fillRect(PY+RW+10,PX-14,1,RL+28);
+   // Dannebrog and three red shirt banners hanging over the top end
+   const fx=WW/2-58;x.fillStyle='#c8102e';x.fillRect(fx,0,18,13);x.fillStyle='#fff';x.fillRect(fx+5,0,3,13);x.fillRect(fx,5,18,3);
+   ['13','23','17'].forEach((n,k)=>{const bx=WW/2-26+k*18;x.fillStyle='#c8102e';x.fillRect(bx,0,14,16);x.fillStyle='#fff';x.fillRect(bx,13,14,1);ptxtS(x,n,bx+2,4,'#fff',1)});
   }else{
    const awS=(xx,yy)=>xx>WW-PY&&yy<PX+120||yy<PX-12&&xx>WW-120;
    rows(PY-8,2,RW+16,PX-14,11,awS);rows(PY-8,PX+RL+12,RW+16,PX-14,23,awS);rows(L[0],L[1],L[2],L[3],5,awS);rows(Rt[0],Rt[1],Rt[2],Rt[3],7,awS)}
