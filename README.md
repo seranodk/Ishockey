@@ -33,7 +33,7 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offside (slået fra som standard) · Lyd.
 
 ## Versioner
-Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`) og som artifact.
+Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
 
 ### Ishockey 0.14.0 · Tæt tackling
 - Du kan kun tackle en modstander tæt på dig, og spilleren springer ikke længere hen over isen.
