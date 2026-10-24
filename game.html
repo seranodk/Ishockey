@@ -1,8 +1,8 @@
-<title>Sensible Ishockey</title>
+<title>Ishockey</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
-/* Layout: one full-screen pixel canvas (16:9, nearest-neighbour scaling) with a blue arcade menu on top and touch controls for landscape phones. The rink runs top-to-bottom like Sensible Soccer. */
+/* Layout: one full-screen pixel canvas (16:9, nearest-neighbour scaling) with a blue arcade menu on top and touch controls for landscape phones. The rink runs top-to-bottom. */
 :root{--bg:#04093a;--ink:#ffffff;--navy:#0b1160;--line:#9aa7ff;--green:#2f8a14;--greenl:#7be05a;--red:#8a1020;--redl:#e0556a;--blue:#0a30f0;--bluel:#8fb0ff;--gray:#8d8f99;--shadow:#02052a;--ac:#ffe600;color-scheme:dark}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 body{display:flex;align-items:center;justify-content:center;font:700 11px/1.6 'Press Start 2P','Courier New',monospace}
@@ -50,7 +50,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD<br>PASS</div><div class="tb" id="bB">TJEK</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l1">SENSIBLE</span><span class="l2">ISHOCKEY</span></div><small id="ver">Sensible Ishockey 0.6.0</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.7.0</small><div id="res"></div>
 <div class="grid"><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile gr" id="topt"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="tctl"><i>&#127918;</i>STYRING</button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span>MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-opt"><div class="hd">INDSTILLINGER</div><button class="gb" id="df">Sværhedsgrad: Normal</button><button class="gb" id="pl">Perioder: 2 min</button><button class="gb" id="ru">Regler: Icing + offside</button><button class="gb" id="sn">Lyd: Til</button><button class="rd" id="oback">TILBAGE</button></div>
@@ -283,7 +283,7 @@ function circ(x,cx,cy,r,col,a0,a1){x.fillStyle=col;const n=Math.ceil(r*7);for(le
 function ptxt(x,s,X,Y,c){x.fillStyle=c;let cx=X;for(const ch of s){const gl=GL[ch];if(gl)for(let i=0;i<15;i++)if(gl[i]=='1')x.fillRect(cx+(i%3),Y+((i/3)|0),1,1);cx+=4}}
 function buildRink(){const[c,x]=mkc(IW,IH);x.translate(PX,PY);
  rrp(x,-8,-10,RL+16,RW+20,CR+8,'#7c8aa0');rrp(x,-7,-9,RL+14,RW+18,CR+7,'#e9eef4');
- const ads=[['NORDMILK','#d6001c'],['ISPOWER','#0a30f0'],['FROSTBANK','#2f8a14'],['ARCTIC','#f2c200'],['ZAMBONI','#7b3fc4'],['BLAA LINJE','#0e9aa7'],['HOCKEY 24','#ff7a00'],['SENSIBLE','#d6001c']];
+ const ads=[['NORDMILK','#d6001c'],['ISPOWER','#0a30f0'],['FROSTBANK','#2f8a14'],['ARCTIC','#f2c200'],['ZAMBONI','#7b3fc4'],['BLAA LINJE','#0e9aa7'],['HOCKEY 24','#ff7a00'],['ISKOLD','#d6001c']];
  for(let i=0,X=CR;X+64<=RL-CR+8;i++,X+=64){const[tx,col]=ads[i%ads.length];for(const Y of[-9,RW+1]){x.fillStyle=col;x.fillRect(X,Y,62,8);x.fillStyle='rgba(0,0,0,.25)';x.fillRect(X,Y+7,62,1);ptxt(x,tx,X+(62-tx.length*4+1>>1),Y+2,col=='#f2c200'?'#111':'#fff')}}
  const[tc,tx]=mkc(RL,RW);rrp(tx,0,0,RL,RW,CR,'#eef4f9');
  tx.globalCompositeOperation='source-atop';
