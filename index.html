@@ -62,15 +62,15 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 </style>
 <div id="app">
 <canvas id="cv"></canvas>
-<div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD<br>PASS</div><div class="tb" id="bB">TJEK</div><div class="tb" id="bP">II</div></div>
+<div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD<br>TJEK</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.9.1</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.10.0</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
-<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd, - tjek<br>SP2: WASD + F skyd, G tjek</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
+<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd/tjek, - pass<br>SP2: WASD + F skyd/tjek, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
 <div class="pg" id="pg-opt"><div class="hd">INDSTILLINGER</div><button class="gb" id="df">Sværhedsgrad: Normal</button><button class="gb" id="pl">Perioder: 2 min</button><button class="gb" id="ru">Regler: Icing + offside</button><button class="gb" id="sn">Lyd: Til</button><button class="gb" id="tctl">STYRING</button><button class="rd" id="oback">TILBAGE</button></div>
-<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD / PASS: mellemrum eller Z (mobil: knappen til højre). Kort tryk er pasning til medspilleren i den retning du peger, hold nede er skud, slip for at skyde.<br>TJEK: X eller Shift.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, . skyder/afleverer, - tjekker.<br>Spiller 2 (lyseblå ring): WASD, F skyder/afleverer, G tjekker.</small><button class="rd" id="cback">TILBAGE</button></div>
+<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD / TJEK: mellemrum eller Z (mobil: den store knap). Med pucken: hold nede for et hårdere skud, slip for at skyde. Uden pucken: tjek modstanderen.<br>PASS: X eller Shift (mobil: den lille knap). Afleverer til medspilleren i den retning du peger.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, . skyder/tjekker, - afleverer.<br>Spiller 2 (lyseblå ring): WASD, F skyder/tjekker, G afleverer.</small><button class="rd" id="cback">TILBAGE</button></div>
 </div></div>
 <script>
 (()=>{'use strict';
@@ -206,7 +206,7 @@ function puckStep(){const q=puck;
    if(rs<4.4||mateSide||rnd()<(rs<7?.55:.2)){if(rs<4.4||mateSide||rnd()<.85)setOwner(best);else{q.vx*=.5;q.vy*=.5;best.cool=6}}
    else{q.vx*=.6;q.vy*=.6;q.vx+=(rnd()-.5)*1.2;q.vy+=(rnd()-.5)*1.2;best.cool=8;q.ice=[false,false];q.lastT=best.t;q.target=null}}}}
 }
-function stealStep(){const q=puck,o=q.owner;if(!o||S.mode!='play')return;for(const e of ALL){if(e.t==o.t||e.gk||e.stun>0||e.cool>0)continue;const[bx,by]=blade(e),d=hyp(q.x-bx,q.y-by);if(d>8)continue;const hi=ctl.indexOf(e),poke=hi>=0&&IN[hi].b;let pr=poke?.22:(hi>=0?0:.012*DSH[OPT.diff]);if(rnd()<pr){q.owner=null;const a=Math.atan2(q.y-e.y,q.x-e.x);q.vx=Math.cos(a)*1.6+e.vx*.4;q.vy=Math.sin(a)*1.6+e.vy*.4;o.cool=20;e.cool=0;q.lastT=e.t;q.lastP=e;q.ice=[false,false];beep(200,.05,'square',.04);return}}}
+function stealStep(){const q=puck,o=q.owner;if(!o||S.mode!='play')return;for(const e of ALL){if(e.t==o.t||e.gk||e.stun>0||e.cool>0)continue;const[bx,by]=blade(e),d=hyp(q.x-bx,q.y-by);if(d>8)continue;const hi=ctl.indexOf(e),poke=hi>=0&&IN[hi].a;let pr=poke?.22:(hi>=0?0:.012*DSH[OPT.diff]);if(rnd()<pr){q.owner=null;const a=Math.atan2(q.y-e.y,q.x-e.x);q.vx=Math.cos(a)*1.6+e.vx*.4;q.vy=Math.sin(a)*1.6+e.vy*.4;o.cool=20;e.cool=0;q.lastT=e.t;q.lastP=e;q.ice=[false,false];beep(200,.05,'square',.04);return}}}
 /* ---------- goals ---------- */
 function scoreGoal(def){const by=1-def;S.score[by]++;S.mode='goal';S.t=170;S.celeb=170;S.goalBy=by;S.msg='MÅL!';S.msgT=170;puck.owner=null;puck.target=null;puck.net=def;puck.vx*=.5;puck.vy*=.5;sfx.horn();sfx.net();S.flash=170}
 /* ---------- goalie ---------- */
@@ -263,11 +263,13 @@ function humanStep(p,I){let m=hyp(I.x,I.y);if(m>1){p.ix=I.x/m;p.iy=I.y/m}else if
  // receiving a pass with no stick input: skate to meet the puck automatically
  if(puck.target===p&&!puck.owner&&m<.15)meetPuck(p,.9);
  const own=puck.owner===p;
- if(I.aP){if(own)p.hold=1;else if(!puck.owner&&hyp(puck.x-p.x,puck.y-p.y)<40)p.fb=26}
- if(own&&p.hold>0){if(I.a)p.hold++;if(I.aR){const h=p.hold;p.hold=0;const dx=m>.3?I.x:Math.cos(p.fa),dy=m>.3?I.y:Math.sin(p.fa);if(h<12){const q=mate(p,dx,dy);passTo(p,q,dx,dy)}else shoot(p,clamp((h-10)/32,.15,1),null)}}
+ // A: with the puck it only shoots (hold to charge, release to shoot); without the puck it checks
+ if(I.aP){if(own)p.hold=1;else doCheck(p)}
+ if(own&&p.hold>0){if(I.a)p.hold++;if(I.aR){const h=p.hold;p.hold=0;shoot(p,clamp((h-4)/32,.2,1),null)}}
  else if(!I.a)p.hold=0;
- if(p.fb>0)p.fb--;
- if(I.bP)doCheck(p)}
+ // B: pass to the teammate in the direction you point
+ if(I.bP&&own){p.hold=0;const dx=m>.3?I.x:Math.cos(p.fa),dy=m>.3?I.y:Math.sin(p.fa);passTo(p,mate(p,dx,dy),dx,dy)}
+ }
 /* ---------- movement ---------- */
 function movePlayer(p){if(p.hitCd>0)p.hitCd--;if(p.chkCd>0)p.chkCd--;if(p.cool>0)p.cool--;
  const sp=1.9*(p.t==1&&!OPT.two?DSP[OPT.diff]:1)*(puck.owner===p?.94:1);
@@ -399,7 +401,7 @@ function hud(){
  g.fillStyle='#000';g.fillRect(MX(puck.y)-1,MY(puck.x)-1,3,3);
  if(S.msgT>0&&S.msg){const big=S.msg=='MÅL!';const sc=big?5:3,w=S.msg.length*4*sc;g.fillStyle='rgba(4,10,50,.6)';g.fillRect(VW/2-w/2-8,VH/2-sc*3-10,w+16,sc*5+20);txt(S.msg,VW/2,VH/2-sc*2.5,big?'#ffe600':'#fff',sc,'c','#02052a')}
  if(S.mode=='goal'&&S.goalBy>=0){txt(TM[S.goalBy].club[0].toUpperCase().replace(/[ÆØÅ]/g,m=>m=='Æ'?'AE':m=='Ø'?'O':'A'),VW/2,VH/2+18,'#fff',2,'c','#02052a')}
- for(const t of[0,1]){const c=ctl[t];if(c&&c.hold>11){const pw=clamp((c.hold-10)/32,0,1),s=toS(c.x,c.y),x=Math.round(s[0]-camX)-9,y=Math.round(s[1]-camY)-28;g.fillStyle='#02052a';g.fillRect(x-1,y-1,20,4);g.fillStyle=pw>.85?'#ff5a3c':'#ffe600';g.fillRect(x,y,Math.round(18*pw),2)}}}
+ for(const t of[0,1]){const c=ctl[t];if(c&&c.hold>6){const pw=clamp((c.hold-4)/32,0,1),s=toS(c.x,c.y),x=Math.round(s[0]-camX)-9,y=Math.round(s[1]-camY)-28;g.fillStyle='#02052a';g.fillRect(x-1,y-1,20,4);g.fillStyle=pw>.85?'#ff5a3c':'#ffe600';g.fillRect(x,y,Math.round(18*pw),2)}}}
 /* ---------- input (screen directions are converted to rink directions) ---------- */
 const K={};
 /* two players on one keyboard. P1: arrows, . shoot/pass, - check (Danish/Mac '-' key is code Slash). P2: WASD, F shoot/pass, G check. Old keys still work. */
