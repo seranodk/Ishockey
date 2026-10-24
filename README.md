@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.7.0**
+**Aktuel version: Ishockey 0.8.0**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -10,7 +10,9 @@ Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i brows
 ## Styring
 - **Mobil:** Træk i venstre side for at skøjte. **SKYD/PASS:** et kort tryk afleverer, hold knappen inde og slip for at skyde. **TJEK:** tackling.
 - **Tastatur:** Piletaster eller WASD. Mellemrum eller Z for skud og aflevering, X eller Shift for at tjekke, P eller Escape for pause.
-- **2 spillere:** Spiller 1 bruger piletaster, 0 og komma. Spiller 2 bruger WASD, G og H.
+- **2 spillere på ét tastatur (også Mac):**
+  - Spiller 1 (grøn ring): piletaster, **.** skyder/afleverer, **-** tjekker.
+  - Spiller 2 (lyseblå ring): WASD, **F** skyder/afleverer, **G** tjekker.
 - Den spiller, du styrer, har en grøn ring. Modstanderen med pucken har en grå skygge.
 
 ## Indstillinger
@@ -18,6 +20,10 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x**. En større ændring hæver første x, en mindre ændring hæver andet x.
+
+### Ishockey 0.8.0
+- Nye taster til 2 spillere på ét tastatur, som også findes på et Mac-tastatur uden numerisk tastatur. Spiller 1: piletaster, . og -. Spiller 2: WASD, F og G.
+- Hold-valget viser SP1 og SP2 og tasterne for hver spiller.
 
 ### Ishockey 0.7.0
 - Spillet hedder nu kun Ishockey: titel, logo, app-navn, versionstekst og reklamebander er rettet.

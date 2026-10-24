@@ -64,11 +64,11 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD<br>PASS</div><div class="tb" id="bB">TJEK</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.7.0</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.8.0</small><div id="res"></div>
 <div class="grid"><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile gr" id="topt"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="tctl"><i>&#127918;</i>STYRING</button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
-<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span>MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
+<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd, - tjek<br>SP2: WASD + F skyd, G tjek</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-opt"><div class="hd">INDSTILLINGER</div><button class="gb" id="df">Sværhedsgrad: Normal</button><button class="gb" id="pl">Perioder: 2 min</button><button class="gb" id="ru">Regler: Icing + offside</button><button class="gb" id="sn">Lyd: Til</button><button class="rd" id="oback">TILBAGE</button></div>
-<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD / PASS: mellemrum eller Z (mobil: knappen til højre). Kort tryk er pasning til medspilleren i den retning du peger, hold nede er skud, slip for at skyde.<br>TJEK: X eller Shift.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE: Spiller 1 bruger piletaster, 0 på numpad til skud og , til tjek. Spiller 2 (lyseblå ring) bruger WASD, G til skud og H til tjek.</small><button class="rd" id="cback">TILBAGE</button></div>
+<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD / PASS: mellemrum eller Z (mobil: knappen til højre). Kort tryk er pasning til medspilleren i den retning du peger, hold nede er skud, slip for at skyde.<br>TJEK: X eller Shift.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, . skyder/afleverer, - tjekker.<br>Spiller 2 (lyseblå ring): WASD, F skyder/afleverer, G tjekker.</small><button class="rd" id="cback">TILBAGE</button></div>
 </div></div>
 <script>
 (()=>{'use strict';
@@ -381,17 +381,19 @@ function hud(){
  for(const t of[0,1]){const c=ctl[t];if(c&&c.hold>11){const pw=clamp((c.hold-10)/32,0,1),s=toS(c.x,c.y),x=Math.round(s[0]-camX)-9,y=Math.round(s[1]-camY)-28;g.fillStyle='#02052a';g.fillRect(x-1,y-1,20,4);g.fillStyle=pw>.85?'#ff5a3c':'#ffe600';g.fillRect(x,y,Math.round(18*pw),2)}}}
 /* ---------- input (screen directions are converted to rink directions) ---------- */
 const K={};
+/* two players on one keyboard. P1: arrows, . shoot/pass, - check (Danish/Mac '-' key is code Slash). P2: WASD, F shoot/pass, G check. Old keys still work. */
+const K2={Period:[0,'a'],Slash:[0,'b'],Minus:[0,'b'],Numpad0:[0,'a'],Digit0:[0,'a'],Comma:[0,'b'],NumpadDecimal:[0,'b'],NumpadComma:[0,'b'],KeyF:[1,'a'],KeyG:[1,'b'],KeyH:[1,'b']};
 function kbUpdate(){const a=(K.ArrowRight?1:0)-(K.ArrowLeft?1:0),b=(K.ArrowDown?1:0)-(K.ArrowUp?1:0),c=(K.KeyD?1:0)-(K.KeyA?1:0),d=(K.KeyS?1:0)-(K.KeyW?1:0);
  if(OPT.two){IN[0].kx=a;IN[0].ky=b;IN[1].kx=c;IN[1].ky=d}else{IN[0].kx=a||c;IN[0].ky=b||d;IN[1].kx=IN[1].ky=0}syncIn()}
 function syncIn(){for(let i=0;i<2;i++){const I=IN[i];const kx=I.kx||0,ky=I.ky||0,tx=i==0?(I.tx||0):0,ty=i==0?(I.ty||0):0,sx=kx||tx,sy=ky||ty;I.x=-sy;I.y=sx}}
 function setBtn(i,k,v){const I=IN[i];if(k=='a'){if(v&&!I.a)I.aP=1;if(!v&&I.a)I.aR=1;I.a=v?1:0}else{if(v&&!I.b)I.bP=1;I.b=v?1:0}}
 addEventListener('keydown',e=>{if(e.repeat)return;K[e.code]=1;const c=e.code;if(S.mode=='menu')return;
  if(c=='KeyP'||c=='Escape'){togglePause();e.preventDefault();return}
- if(OPT.two){if(c=='Numpad0'||c=='Digit0')setBtn(0,'a',1);if(c=='NumpadDecimal'||c=='Comma'||c=='NumpadComma')setBtn(0,'b',1);if(c=='KeyG')setBtn(1,'a',1);if(c=='KeyH')setBtn(1,'b',1)}
+ if(OPT.two){const m=K2[c];if(m){setBtn(m[0],m[1],1);e.preventDefault()}}
  else{if(c=='Space'||c=='KeyZ'||c=='Enter')setBtn(0,'a',1);if(c=='KeyX'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'b',1)}
  if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(c))e.preventDefault();kbUpdate()});
 addEventListener('keyup',e=>{K[e.code]=0;const c=e.code;
- if(OPT.two){if(c=='Numpad0'||c=='Digit0')setBtn(0,'a',0);if(c=='NumpadDecimal'||c=='Comma'||c=='NumpadComma')setBtn(0,'b',0);if(c=='KeyG')setBtn(1,'a',0);if(c=='KeyH')setBtn(1,'b',0)}
+ if(OPT.two){const m=K2[c];if(m)setBtn(m[0],m[1],0)}
  else{if(c=='Space'||c=='KeyZ'||c=='Enter')setBtn(0,'a',0);if(c=='KeyX'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'b',0)}kbUpdate()});
 const TOUCH='ontouchstart' in window||navigator.maxTouchPoints>0;let jp=null,jo=[0,0];const joy=$('joy');
 $('zoneL').addEventListener('pointerdown',e=>{if(jp!==null)return;jp=e.pointerId;jo=[e.clientX,e.clientY];const r=$('app').getBoundingClientRect();joy.style.display='block';joy.style.left=(e.clientX-r.left)+'px';joy.style.top=(e.clientY-r.top)+'px';joy.firstElementChild.style.transform='';$('zoneL').setPointerCapture(e.pointerId);e.preventDefault()});
@@ -412,8 +414,9 @@ $('pres').onclick=togglePause;$('pquit').onclick=()=>{S.paused=false;showMenu()}
 $('s0').onchange=()=>kitUI(0);$('s1').onchange=()=>kitUI(1);
 $('rnd').onclick=()=>{const a=rr(12);let b;do b=rr(12);while(b==a);$('s0').value=a;$('s1').value=b;kitUI(0);kitUI(1)};
 $('go').onclick=()=>{let a=+$('s0').value,b=+$('s1').value;if(a==b)b=(b+1)%12;startMatch(a,b)};
-$('t1p').onclick=()=>{OPT.two=0;saveOpt();$('cname').textContent='KAMP';show('pg-sel')};
-$('t2p').onclick=()=>{OPT.two=1;saveOpt();$('cname').textContent='2 SPILLERE';show('pg-sel')};
+function selMode(two){OPT.two=two;saveOpt();$('cname').textContent=two?'2 SPILLERE':'KAMP';$('lab0').textContent=two?'SP1':'DIG';$('lab1').textContent=two?'SP2':'MOD';$('keys2').hidden=!two;show('pg-sel')}
+$('t1p').onclick=()=>selMode(0);
+$('t2p').onclick=()=>selMode(1);
 $('thur').onclick=()=>{OPT.two=0;const a=rr(12);let b;do b=rr(12);while(b==a);startMatch(a,b)};
 $('back').onclick=()=>show('pg-main');$('topt').onclick=()=>{optFrom='pg-main';show('pg-opt')};$('oset').onclick=()=>{optFrom='pg-sel';show('pg-opt')};$('oback').onclick=()=>show(optFrom);
 $('tctl').onclick=()=>show('pg-ctl');$('cback').onclick=()=>show('pg-main');
