@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}</style>
-<title>Ishockey 0.14.0</title>
+<title>Ishockey 0.14.1</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -65,12 +65,12 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.14.0 · Tæt tackling</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.14.1 · Shift-skud</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
-<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + . skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
+<div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
 <div class="pg" id="pg-opt"><div class="hd">INDSTILLINGER</div><button class="gb" id="df">Sværhedsgrad: Normal</button><button class="gb" id="pl">Perioder: 2 min</button><button class="gb" id="ru">Regler: Icing + offside</button><button class="gb" id="sn">Lyd: Til</button><button class="gb" id="tctl">STYRING</button><button class="rd" id="oback">TILBAGE</button></div>
-<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD: mellemrum eller Z (mobil: den store knap). Med pucken: hold nede for et hårdere skud, slip for at skyde. Uden pucken: tackl den nærmeste modstander.<br>PASS: X eller Shift (mobil: den lille knap). Afleverer til medspilleren i den retning du peger.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, . skyder, - afleverer.<br>Spiller 2 (lyseblå ring): WASD, F skyder, G afleverer.</small><button class="rd" id="cback">TILBAGE</button></div>
+<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD: Shift, mellemrum eller Z (mobil: den store knap). Med pucken: hold nede for et hårdere skud, slip for at skyde. Uden pucken: tackl den nærmeste modstander.<br>PASS: - eller X (mobil: den lille knap). Afleverer til medspilleren i den retning du peger.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, højre Shift skyder, - afleverer.<br>Spiller 2 (lyseblå ring): WASD, F skyder, G afleverer.</small><button class="rd" id="cback">TILBAGE</button></div>
 </div></div>
 <script>
 (()=>{'use strict';
@@ -449,8 +449,8 @@ function hud(){
  for(const t of[0,1]){const c=ctl[t];if(c&&c.hold>6){const pw=clamp((c.hold-4)/32,0,1),s=toS(c.x,c.y),x=Math.round(s[0]-camX)-9,y=Math.round(s[1]-camY)-28;g.fillStyle='#02052a';g.fillRect(x-1,y-1,20,4);g.fillStyle=pw>.85?'#ff5a3c':'#ffe600';g.fillRect(x,y,Math.round(18*pw),2)}}}
 /* ---------- input (screen directions are converted to rink directions) ---------- */
 const K={};
-/* two players on one keyboard. P1: arrows, . shoot/pass, - check (Danish/Mac '-' key is code Slash). P2: WASD, F shoot/pass, G check. Old keys still work. */
-const K2={Period:[0,'a'],Slash:[0,'b'],Minus:[0,'b'],Numpad0:[0,'a'],Digit0:[0,'a'],Comma:[0,'b'],NumpadDecimal:[0,'b'],NumpadComma:[0,'b'],KeyF:[1,'a'],KeyG:[1,'b'],KeyH:[1,'b']};
+/* two players on one keyboard. P1: arrows, right Shift shoot, - pass (Danish/Mac '-' key is code Slash). P2: WASD, F shoot/pass, G check. Old keys still work. */
+const K2={ShiftRight:[0,'a'],Period:[0,'a'],Slash:[0,'b'],Minus:[0,'b'],Numpad0:[0,'a'],Digit0:[0,'a'],Comma:[0,'b'],NumpadDecimal:[0,'b'],NumpadComma:[0,'b'],KeyF:[1,'a'],KeyG:[1,'b'],KeyH:[1,'b']};
 function kbUpdate(){const a=(K.ArrowRight?1:0)-(K.ArrowLeft?1:0),b=(K.ArrowDown?1:0)-(K.ArrowUp?1:0),c=(K.KeyD?1:0)-(K.KeyA?1:0),d=(K.KeyS?1:0)-(K.KeyW?1:0);
  if(OPT.two){IN[0].kx=a;IN[0].ky=b;IN[1].kx=c;IN[1].ky=d}else{IN[0].kx=a||c;IN[0].ky=b||d;IN[1].kx=IN[1].ky=0}syncIn()}
 function syncIn(){for(let i=0;i<2;i++){const I=IN[i];const kx=I.kx||0,ky=I.ky||0,tx=i==0?(I.tx||0):0,ty=i==0?(I.ty||0):0,sx=kx||tx,sy=ky||ty;I.x=-sy;I.y=sx}}
@@ -458,11 +458,11 @@ function setBtn(i,k,v){const I=IN[i];if(k=='a'){if(v&&!I.a)I.aP=1;if(!v&&I.a)I.a
 addEventListener('keydown',e=>{if(e.repeat)return;K[e.code]=1;const c=e.code;if(S.mode=='menu')return;
  if(c=='KeyP'||c=='Escape'){togglePause();e.preventDefault();return}
  if(OPT.two){const m=K2[c];if(m){setBtn(m[0],m[1],1);e.preventDefault()}}
- else{if(c=='Space'||c=='KeyZ'||c=='Enter')setBtn(0,'a',1);if(c=='KeyX'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'b',1)}
- if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(c))e.preventDefault();kbUpdate()});
+ else{if(c=='Space'||c=='KeyZ'||c=='Enter'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'a',1);if(c=='KeyX'||c=='Slash'||c=='Minus')setBtn(0,'b',1)}
+ if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Slash','Minus'].includes(c))e.preventDefault();kbUpdate()});
 addEventListener('keyup',e=>{K[e.code]=0;const c=e.code;
  if(OPT.two){const m=K2[c];if(m)setBtn(m[0],m[1],0)}
- else{if(c=='Space'||c=='KeyZ'||c=='Enter')setBtn(0,'a',0);if(c=='KeyX'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'b',0)}kbUpdate()});
+ else{if(c=='Space'||c=='KeyZ'||c=='Enter'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'a',0);if(c=='KeyX'||c=='Slash'||c=='Minus')setBtn(0,'b',0)}kbUpdate()});
 const TOUCH='ontouchstart' in window||navigator.maxTouchPoints>0;let jp=null,jo=[0,0];const joy=$('joy');
 $('zoneL').addEventListener('pointerdown',e=>{if(jp!==null)return;jp=e.pointerId;jo=[e.clientX,e.clientY];const r=$('app').getBoundingClientRect();joy.style.display='block';joy.style.left=(e.clientX-r.left)+'px';joy.style.top=(e.clientY-r.top)+'px';joy.firstElementChild.style.transform='';$('zoneL').setPointerCapture(e.pointerId);e.preventDefault()});
 $('zoneL').addEventListener('pointermove',e=>{if(e.pointerId!==jp)return;let dx=e.clientX-jo[0],dy=e.clientY-jo[1];const m=hyp(dx,dy),R=44;if(m>R){dx=dx/m*R;dy=dy/m*R}joy.firstElementChild.style.transform='translate('+dx+'px,'+dy+'px)';IN[0].tx=m>8?dx/R:0;IN[0].ty=m>8?dy/R:0;syncIn()});

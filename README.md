@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.14.0 · Tæt tackling**
+**Aktuel version: Ishockey 0.14.1 · Shift-skud**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -23,9 +23,9 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 
 ## Styring
 - **Mobil:** Træk i venstre side for at skøjte. Den store knap **SKYD** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken tackler du, men kun en modstander tæt på dig. Rammer du ham med pucken, vinder du den. Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
-- **Tastatur:** Piletaster eller WASD. Mellemrum eller Z skyder (og tackler uden puck), X eller Shift afleverer, og P eller Escape er pause.
+- **Tastatur:** Piletaster eller WASD. **Shift** skyder (og tackler uden puck), og det gør mellemrum og Z også. **-** afleverer, og det gør X også. P eller Escape er pause.
 - **2 spillere på ét tastatur (også Mac):**
-  - Spiller 1 (grøn ring): piletaster, **.** skyder, **-** afleverer.
+  - Spiller 1 (grøn ring): piletaster, **højre Shift** skyder, **-** afleverer.
   - Spiller 2 (lyseblå ring): WASD, **F** skyder, **G** afleverer.
 - Den spiller, du styrer, har en grøn ring. Modstanderen med pucken har en grå skygge.
 
@@ -34,6 +34,9 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.14.1 · Shift-skud
+- Spiller 1 bruger nu piletasterne, Shift til skud og - til aflevering. Det gælder både alene og med 2 spillere, hvor det er højre Shift.
 
 ### Ishockey 0.14.0 · Tæt tackling
 - Du kan kun tackle en modstander tæt på dig, og spilleren springer ikke længere hen over isen.
