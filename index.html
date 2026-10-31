@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}</style>
-<title>Ishockey 0.18.2</title>
+<title>Ishockey 0.18.3</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -66,7 +66,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.2 · Joystick</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.3 · Blødere returer</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -184,17 +184,17 @@ function puckStep(){const q=puck;
  if(q.z<=0){q.z=0;q.vz=q.vz<-.7?-q.vz*.35:0}
  const f=q.z>0?.998:.993;q.vx*=f;q.vy*=f;if(hyp(q.vx,q.vy)<.02){q.vx=q.vy=0}
  // posts
- for(const t of[0,1]){const gd=goal(t);for(const yy of[gd.y0,gd.y1]){const dx=q.x-gd.gx,dy=q.y-yy,d=hyp(dx,dy);if(d<2.6&&q.z<NETH+1&&d>.01){const nx=dx/d,ny=dy/d,vn=q.vx*nx+q.vy*ny;if(vn<0){q.vx-=1.8*vn*nx;q.vy-=1.8*vn*ny;q.x=gd.gx+nx*2.7;q.y=yy+ny*2.7;S.spark=12;S.sparkX=gd.gx;S.sparkY=yy;sfx.post()}}}}
+ for(const t of[0,1]){const gd=goal(t);for(const yy of[gd.y0,gd.y1]){const dx=q.x-gd.gx,dy=q.y-yy,d=hyp(dx,dy);if(d<2.6&&q.z<NETH+1&&d>.01){const nx=dx/d,ny=dy/d,vn=q.vx*nx+q.vy*ny;if(vn<0){q.vx-=1.45*vn*nx;q.vy-=1.45*vn*ny;q.vx*=.85;q.vy*=.85;q.x=gd.gx+nx*2.7;q.y=yy+ny*2.7;S.spark=12;S.sparkX=gd.gx;S.sparkY=yy;sfx.post()}}}}
  // nets
  for(const t of[0,1]){const gd=goal(t),inB=(x,y)=>x>gd.x0&&x<gd.x1&&y>gd.y0&&y<gd.y1,now=inB(q.x,q.y),was=inB(px,py);
   if(now&&!was){const mouth=gd.face>0?px>=gd.x1:px<=gd.x0;
    if(mouth&&q.z<NETH){if(S.mode=='play'){scoreGoal(t);return}}
    else if(mouth){/* over the bar */}
-   else if(px<=gd.x0||px>=gd.x1){q.x=px;q.vx=-q.vx*.4}else{q.y=py;q.vy=-q.vy*.4}}
+   else if(px<=gd.x0||px>=gd.x1){q.x=px;q.vx=-q.vx*.25}else{q.y=py;q.vy=-q.vy*.25}}
   else if(now&&was){if(gd.face>0&&q.x<gd.x0+1.5){q.x=gd.x0+1.5;q.vx=Math.abs(q.vx)*.25}else if(gd.face<0&&q.x>gd.x1-1.5){q.x=gd.x1-1.5;q.vx=-Math.abs(q.vx)*.25}
    if(q.y<gd.y0+1.5){q.y=gd.y0+1.5;q.vy=Math.abs(q.vy)*.4}else if(q.y>gd.y1-1.5){q.y=gd.y1-1.5;q.vy=-Math.abs(q.vy)*.4}}}
  // boards
- const nh=rinkClamp(q,1.5);if(nh){const vn=q.vx*nh[0]+q.vy*nh[1];if(q.z>BH&&vn<0&&S.mode=='play'){const dot=nearDot(q.x,q.y);whistle('PUCK UD AF SPIL',dot,80);return}if(vn<0){q.vx-=1.7*vn*nh[0];q.vy-=1.7*vn*nh[1];q.vx*=.97;q.vy*=.97;if(Math.abs(vn)>1.5)beep(140,.05,'triangle',.03)}}
+ const nh=rinkClamp(q,1.5);if(nh){const vn=q.vx*nh[0]+q.vy*nh[1];if(q.z>BH&&vn<0&&S.mode=='play'){const dot=nearDot(q.x,q.y);whistle('PUCK UD AF SPIL',dot,80);return}if(vn<0){q.vx-=1.4*vn*nh[0];q.vy-=1.4*vn*nh[1];q.vx*=.88;q.vy*=.88;if(Math.abs(vn)>1.5)beep(140,.05,'triangle',.03)}}
  if(S.mode!='play')return;
  // icing / offside
  if(OPT.rules){
@@ -237,7 +237,7 @@ function goalie(G){const t=G.t,gd=goal(t),cfg=gcfg(t),q=puck;
   const catchP=sp2<2?.8:sp2<4?.4:.22;
   const hi=q.z>1.8,side=q.y>G.y?1:-1;
   if(rnd()<catchP){G.anim={t:hi?'glove':'bfly',n:30,side};q.vx=q.vy=0;q.z=0;q.owner=null;sfx.save();const own=TM[t].dir>0?[100,q.y<CY?66:206]:[540,q.y<CY?66:206];whistle('MÅLMAND HOLDER',own,80)}
-  else{G.anim={t:hi?'block':'pad',n:20,side};const nx=(q.x-G.x)/(d||1),ny=(q.y-G.y)/(d||1),ang=Math.atan2(ny,nx)+(rnd()-.5)*1.3;q.vx=Math.cos(ang)*sp2*.5;q.vy=Math.sin(ang)*sp2*.5;q.vz=.3;q.x=G.x+Math.cos(ang)*(R+1);q.y=G.y+Math.sin(ang)*(R+1);sfx.save()}}}
+  else{G.anim={t:hi?'block':'pad',n:20,side};const nx=(q.x-G.x)/(d||1),ny=(q.y-G.y)/(d||1),ang=Math.atan2(ny,nx)+(rnd()-.5)*1.3;q.vx=Math.cos(ang)*sp2*.28;q.vy=Math.sin(ang)*sp2*.28;q.vz=.3;q.x=G.x+Math.cos(ang)*(R+1);q.y=G.y+Math.sin(ang)*(R+1);sfx.save()}}}
 /* ---------- skater AI ---------- */
 function formation(p,mode){const t=p.t,pu=uOf(puck.x,t),pv=puck.y/RW;let u,v;const r=p.role;
  if(mode=='att'){if(r=='LD'||r=='RD'){u=clamp(pu-.14,.4,.7);v=r=='LD'?.33:.67}else if(r=='C'){u=clamp(pu+.06,.5,.84);v=.5}else{u=clamp(pu+.1,.52,.88);v=r=='LW'?.18:.82}v+=(pv-.5)*.3}

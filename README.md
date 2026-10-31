@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.18.2 · Joystick**
+**Aktuel version: Ishockey 0.18.3 · Blødere returer**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -34,6 +34,10 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.18.3 · Blødere returer
+- Pucken springer mindre hårdt tilbage fra banden, også banden bag målet. Et skud forbi målet kommer tilbage med cirka halv så meget fart som før.
+- Returer fra målmanden er også cirka 45 % blødere, og det samme gælder stolper og nettets sider.
 
 ### Ishockey 0.18.2 · Joystick
 - Joysticket ser ud og virker som i Tennis. Det står altid synligt nederst til venstre, svagt når det ikke bruges, og flytter hen til fingeren, når du rører venstre side. Når du slipper, vender det tilbage.
