@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}</style>
-<title>Ishockey 0.18.1</title>
+<title>Ishockey 0.18.2</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -25,8 +25,9 @@ body{display:flex;align-items:center;justify-content:center;font:700 11px/1.6 'P
 #tc{position:absolute;inset:0;pointer-events:none;display:none}
 #tc.on{display:block}
 #zoneL{position:absolute;left:0;top:0;bottom:0;width:46%;pointer-events:auto}
-#joy{position:absolute;width:104px;height:104px;margin:-52px 0 0 -52px;border:3px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(255,255,255,.12);display:none}
-#joy i{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(255,255,255,.55)}
+#joy{position:absolute;width:128px;height:128px;margin:-64px 0 0 -64px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.06),rgba(255,255,255,.12));border:2px solid rgba(255,255,255,.22);opacity:.75;transition:opacity .2s}
+#joy.idle{opacity:.38}
+#joy i{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#e9edf9,#9aa6d6);box-shadow:0 3px 8px #0008}
 .tb{position:absolute;pointer-events:auto;border-radius:50%;border:3px solid rgba(255,255,255,.65);background:rgba(255,255,255,.18);color:#fff;font:700 10px 'Press Start 2P','Courier New',monospace;display:flex;align-items:center;justify-content:center;text-align:center}
 .tb.dn{background:rgba(255,70,50,.55)}
 #bA{width:96px;height:96px;right:max(18px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px))}
@@ -62,10 +63,10 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 </style>
 <div id="app">
 <canvas id="cv"></canvas>
-<div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
+<div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.1 · Topfart</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.2 · Joystick</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -606,9 +607,11 @@ addEventListener('keyup',e=>{K[e.code]=0;const c=e.code;
  if(OPT.two){const m=K2[c];if(m)setBtn(m[0],m[1],0)}
  else{if(c=='Space'||c=='KeyZ'||c=='Enter'||c=='ShiftLeft'||c=='ShiftRight')setBtn(0,'a',0);if(c=='KeyX'||c=='Slash'||c=='Minus')setBtn(0,'b',0)}kbUpdate()});
 const TOUCH='ontouchstart' in window||navigator.maxTouchPoints>0;let jp=null,jo=[0,0];const joy=$('joy');
-$('zoneL').addEventListener('pointerdown',e=>{if(jp!==null)return;jp=e.pointerId;jo=[e.clientX,e.clientY];const r=$('app').getBoundingClientRect();joy.style.display='block';joy.style.left=(e.clientX-r.left)+'px';joy.style.top=(e.clientY-r.top)+'px';joy.firstElementChild.style.transform='';$('zoneL').setPointerCapture(e.pointerId);e.preventDefault()});
-$('zoneL').addEventListener('pointermove',e=>{if(e.pointerId!==jp)return;let dx=e.clientX-jo[0],dy=e.clientY-jo[1];const m=hyp(dx,dy),R=44;if(m>R){dx=dx/m*R;dy=dy/m*R}joy.firstElementChild.style.transform='translate('+dx+'px,'+dy+'px)';IN[0].tx=m>8?dx/R:0;IN[0].ty=m>8?dy/R:0;syncIn()});
-const jend=e=>{if(e.pointerId!==jp)return;jp=null;joy.style.display='none';IN[0].tx=IN[0].ty=0;syncIn()};$('zoneL').addEventListener('pointerup',jend);$('zoneL').addEventListener('pointercancel',jend);
+/* resting place of the joystick inside the left zone, like in Tennis */
+function joyRest(){if(jp!==null)return;const a=$('app').getBoundingClientRect(),z=$('zoneL').getBoundingClientRect();if(!z.width)return;joy.style.left=(z.left-a.left+Math.max(80,z.width*.42))+'px';joy.style.top=(z.bottom-a.top-Math.max(90,Math.min(z.height*.42,120)))+'px';joy.firstElementChild.style.transform='';joy.classList.add('idle')}
+$('zoneL').addEventListener('pointerdown',e=>{if(jp!==null)return;jp=e.pointerId;jo=[e.clientX,e.clientY];const r=$('app').getBoundingClientRect();joy.classList.remove('idle');joy.style.left=(e.clientX-r.left)+'px';joy.style.top=(e.clientY-r.top)+'px';joy.firstElementChild.style.transform='';try{$('zoneL').setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+$('zoneL').addEventListener('pointermove',e=>{if(e.pointerId!==jp)return;let dx=e.clientX-jo[0],dy=e.clientY-jo[1];const m=hyp(dx,dy),R=52;if(m>R){dx=dx/m*R;dy=dy/m*R}joy.firstElementChild.style.transform='translate('+dx+'px,'+dy+'px)';let mx=dx/R,my=dy/R;const mm=hyp(mx,my);if(mm<.14){mx=my=0}else{const k=Math.min(1,(mm-.14)/.6)/mm;mx*=k;my*=k}IN[0].tx=mx;IN[0].ty=my;syncIn()});
+const jend=e=>{if(e.pointerId!==jp)return;jp=null;IN[0].tx=IN[0].ty=0;syncIn();joyRest()};$('zoneL').addEventListener('pointerup',jend);$('zoneL').addEventListener('pointercancel',jend);
 function hold(el,fn){el.addEventListener('pointerdown',e=>{el.setPointerCapture(e.pointerId);el.classList.add('dn');fn(1);e.preventDefault()});const up=e=>{el.classList.remove('dn');fn(0)};el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)}
 hold($('bA'),v=>setBtn(0,'a',v));hold($('bB'),v=>setBtn(0,'b',v));$('bP').addEventListener('pointerdown',e=>{togglePause();e.preventDefault()});
 /* ---------- menus ---------- */
@@ -618,7 +621,7 @@ function kitUI(n){const c=CL()[+$('s'+n).value],k=$('k'+n);if(!c)return;k.style.
 function opts(sel,list){sel.innerHTML='';list.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=c[0];sel.appendChild(o)})}
 function fill(){opts($('lg'),Object.values(LEAGUES).map(l=>[l.n]));$('lg').value=Object.keys(LEAGUES).indexOf(LG);fillTeams()}
 function fillTeams(){for(const s of['s0','s1'])opts($(s),CL());$('s0').value=0;$('s1').value=1;kitUI(0);kitUI(1)}
-function startMatch(a,b,tour){document.activeElement&&document.activeElement.blur();if(TOUCH)enterFS();$('menu').style.display='none';document.body.classList.add('playing');if(TOUCH||matchMedia('(pointer:coarse)').matches)$('tc').classList.add('on');
+function startMatch(a,b,tour){document.activeElement&&document.activeElement.blur();if(TOUCH)enterFS();$('menu').style.display='none';document.body.classList.add('playing');if(TOUCH||matchMedia('(pointer:coarse)').matches)($('tc').classList.add('on'),requestAnimationFrame(joyRest));
  S.tour=tour||null;newTeams(a,b);S.period=1;S.ot=false;S.score=[0,0];S.shots=[0,0];S.len=OPT.plen*3600;S.over=false;S.celeb=0;S.flash=0;setDirs();startPeriod();puck.hist=[];fit();camX=PY+RW/2-VW/2;camY=toS(RL/2,CY)[1]-VH/2;beep(1,.01)}
 function showMenu(){S.mode='menu';$('menu').style.display='flex';$('pause').style.display='none';$('tc').classList.remove('on');document.body.classList.remove('playing');show(S.tour?'pg-tour':'pg-sel');fit()}
 function togglePause(){if(S.mode=='menu')return;S.paused=!S.paused;$('pause').style.display=S.paused?'flex':'none'}
@@ -676,7 +679,7 @@ function lab(){$('df').textContent='Sværhedsgrad: '+DN[OPT.diff];$('pl').textCo
 $('df').onclick=()=>{OPT.diff=(OPT.diff+1)%3;saveOpt();lab()};$('pl').onclick=()=>{OPT.plen=OPT.plen%3+1;saveOpt();lab()};$('ru').onclick=()=>{OPT.rules=1-OPT.rules;saveOpt();lab()};$('sn').onclick=()=>{OPT.sound=1-OPT.sound;saveOpt();lab()};
 /* ---------- loop ---------- */
 /* the canvas adapts to the screen: tall and narrow in portrait (controls below), wide in landscape */
-function fit(){const w=$('app').clientWidth,h=$('app').clientHeight,port=h>w,tch=$('tc').classList.contains('on'),ah=port&&tch?Math.max(200,h-110):h;
+function fit(){setTimeout(()=>{try{joyRest()}catch(e){}},0);const w=$('app').clientWidth,h=$('app').clientHeight,port=h>w,tch=$('tc').classList.contains('on'),ah=port&&tch?Math.max(200,h-110):h;
  if(port){VW=320;VH=clamp(Math.round(320*ah/w),243,720)}else{VH=243;VW=clamp(Math.round(243*w/ah),324,560)}
  if(cv.width!==VW||cv.height!==VH){cv.width=VW;cv.height=VH;g.imageSmoothingEnabled=false}
  const s=Math.min(w/VW,ah/VH);cv.style.width=Math.floor(VW*s)+'px';cv.style.height=Math.floor(VH*s)+'px';cv.style.marginBottom=(h-ah)+'px'}

@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.18.1 · Topfart**
+**Aktuel version: Ishockey 0.18.2 · Joystick**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -22,7 +22,7 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 - **Gigantium (Sparekassen Danmark Arena):** Når Aalborg Pirates spiller hjemme, foregår kampen i Gigantium, tegnet ud fra billeder af hallen. Der er to tribuner hele vejen rundt: en nedre ring med sorte sæder og lyse betontrapper og en øvre ring bag glasrækværk, med et rødt LED-bånd imellem. Over den ene ende hænger Dannebrog og trøjebannere. Banderne er hvide med blå kant, der er en stor rød cirkel midt på isen, og man kan se banens runde hjørner.
 
 ## Styring
-- **Mobil:** Træk i venstre side for at skøjte. Den store knap **SKYD** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken kan du lave et hit: tryk lige når du skøjter ind i en modstander. Med den rigtige timing vælter han af og til (omkring hvert tiende forsøg), og har han pucken, vinder du den. Ellers er det bare et stokketjek. At køre ind i en modstander vælter ham aldrig. Trykker du SKYD, mens pucken er på vej til dig, skyder du den direkte på mål (one-timer). Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
+- **Mobil:** Joysticket står altid synligt nederst til venstre. Sæt fingeren hvor som helst i venstre side, så flytter joysticket derhen, og træk for at skøjte. Den store knap **SKYD** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken kan du lave et hit: tryk lige når du skøjter ind i en modstander. Med den rigtige timing vælter han af og til (omkring hvert tiende forsøg), og har han pucken, vinder du den. Ellers er det bare et stokketjek. At køre ind i en modstander vælter ham aldrig. Trykker du SKYD, mens pucken er på vej til dig, skyder du den direkte på mål (one-timer). Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
 - **Tastatur:** Piletaster eller WASD. **Shift** skyder (og laver hits og one-timers uden puck), og det gør mellemrum og Z også. **-** afleverer, og det gør X også. P eller Escape er pause.
 - **2 spillere på ét tastatur (også Mac):**
   - Spiller 1 (grøn ring): piletaster, **højre Shift** skyder, **-** afleverer.
@@ -34,6 +34,10 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.18.2 · Joystick
+- Joysticket ser ud og virker som i Tennis. Det står altid synligt nederst til venstre, svagt når det ikke bruges, og flytter hen til fingeren, når du rører venstre side. Når du slipper, vender det tilbage.
+- Samme følsomhed som i Tennis: en lille dødzone i midten, og derefter blødt op til fuld fart.
 
 ### Ishockey 0.18.1 · Topfart
 - Topfart: Når en spiller har skøjtet ligeud i fuld fart et øjeblik, uden at nogen har rørt ham, bygger han langsomt op til 20 % mere fart. Det gælder alle spillere.
