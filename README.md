@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.15.0 · Hits og one-timer**
+**Aktuel version: Ishockey 0.16.0 · Liv på isen**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -22,7 +22,7 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 - **Gigantium (Sparekassen Danmark Arena):** Når Aalborg Pirates spiller hjemme, foregår kampen i Gigantium, tegnet ud fra billeder af hallen. Der er to tribuner hele vejen rundt: en nedre ring med sorte sæder og lyse betontrapper og en øvre ring bag glasrækværk, med et rødt LED-bånd imellem. Over den ene ende hænger Dannebrog og trøjebannere. Banderne er hvide med blå kant, der er en stor rød cirkel midt på isen, og man kan se banens runde hjørner.
 
 ## Styring
-- **Mobil:** Træk i venstre side for at skøjte. Den store knap **SKYD** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken laver du et hit på en modstander tæt på dig, og han vælter. Har han pucken, vinder du den. Trykker du SKYD, mens pucken er på vej til dig, skyder du den direkte på mål (one-timer). Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
+- **Mobil:** Træk i venstre side for at skøjte. Den store knap **SKYD** skyder, når du har pucken: hold den inde for et hårdere skud, og slip for at skyde. Uden pucken kan du lave et hit: tryk lige når du skøjter ind i en modstander. Med den rigtige timing vælter han af og til (omkring hvert tiende forsøg), og har han pucken, vinder du den. Ellers er det bare et stokketjek. At køre ind i en modstander vælter ham aldrig. Trykker du SKYD, mens pucken er på vej til dig, skyder du den direkte på mål (one-timer). Den lille knap **PASS** afleverer til medspilleren i den retning, du peger.
 - **Tastatur:** Piletaster eller WASD. **Shift** skyder (og laver hits og one-timers uden puck), og det gør mellemrum og Z også. **-** afleverer, og det gør X også. P eller Escape er pause.
 - **2 spillere på ét tastatur (også Mac):**
   - Spiller 1 (grøn ring): piletaster, **højre Shift** skyder, **-** afleverer.
@@ -34,6 +34,14 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.16.0 · Liv på isen
+- Hits er sjældne og kræver timing: Tryk SKYD lige når du skøjter ind i en modstander. Omkring hvert tiende forsøg vælter han. Bare at køre ind i en modstander vælter aldrig nogen.
+- Ny fald-animation: Spilleren snubler med armene i vejret, glider ned ad isen med stokken flyvende væk, og rejser sig via et knæ.
+- Teksten ONE-TIMER! er fjernet, men one-timeren virker stadig.
+- Skøjteanimation: Benene sparker skiftevis ud til siden, kroppen læner sig ind i svingene og vipper med takten, og handskerne svinger.
+- Skud: Stokken trækkes tilbage, mens skuddet lades op, og svinges igennem bagefter. Hårde skud trækker en hale efter sig, og pucken giver et glimt, når den rammer stolpen.
+- Målfejring: Målscoreren skøjter ud mod banden med armene i vejret, og medspillerne samler sig om ham. Målhorn-lyset gløder rødt bag målet, og der falder konfetti i det scorende holds farver.
 
 ### Ishockey 0.15.0 · Hits og one-timer
 - Hits: SKYD uden puck rammer en modstander tæt på dig, og han vælter og ligger på isen et øjeblik med stjerner over hovedet. Det gælder også spillere uden puck.
