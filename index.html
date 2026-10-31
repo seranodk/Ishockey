@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}</style>
-<title>Ishockey 0.18.3</title>
+<title>Ishockey 0.18.4</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -66,7 +66,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.3 · Blødere returer</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.4 · Uden konfetti</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
@@ -214,12 +214,7 @@ function stealStep(){const q=puck,o=q.owner;if(!o||S.mode!='play')return;for(con
 /* after a goal the scorer swings off towards the boards and his teammates skate over to him; the other team glides to a stop */
 function celebrate(){const sc=S.scorer;if(!sc)return;for(const t of[0,1])for(const p of sk(t)){if(t!=S.goalBy){p.ix*=.0;p.iy*=.0;continue}
  if(p===sc){goTo(p,S.celebT[0],S.celebT[1],.85);continue}const i=sk(t).indexOf(p),a=i*1.3;goTo(p,sc.x+Math.cos(a)*11,sc.y+Math.sin(a)*11,.9)}}
-/* confetti in the scoring team's colours, falling over the whole screen */
-let CONF=[];function startConfetti(by){const k=TM[by].kit,cols=[k.j,k.t,'#ffffff',k.j];CONF=[];for(let i=0;i<150;i++)CONF.push({x:rnd()*VW,y:-rnd()*VH*.6,vy:.8+rnd()*.7,ph:rnd()*6,c:cols[i%4],w:rnd()<.5?2:1})}
-function stepConfetti(){for(const c of CONF){c.y+=c.vy;c.ph+=.08;c.x+=Math.sin(c.ph)*.35}if(S.mode!='goal')CONF=CONF.filter(c=>c.y<VH)}
-function drawConfetti(){for(const c of CONF){if(c.y<-2)continue;g.fillStyle=c.c;g.fillRect(Math.round(c.x),Math.round(c.y),c.w+(Math.sin(c.ph*2)>0?1:0),Math.sin(c.ph*2)>0?1:2)}}
-function scoreGoal(def){const by=1-def;{const lp=puck.lastP;let sc=lp&&lp.t==by&&!lp.gk?lp:null;if(!sc){let bd=1e9;for(const m of sk(by)){const d=hyp(m.x-puck.x,m.y-puck.y);if(d<bd){bd=d;sc=m}}}S.scorer=sc;S.celebT=[atkX(by)-TM[by].dir*110,sc&&sc.y<CY?34:RW-34]}
- startConfetti(by);S.score[by]++;S.mode='goal';S.t=170;S.celeb=170;S.goalBy=by;S.msg='MÅL!';S.msgT=170;puck.owner=null;puck.target=null;puck.net=def;puck.vx*=.5;puck.vy*=.5;sfx.horn();sfx.net();S.flash=170}
+function scoreGoal(def){const by=1-def;{const lp=puck.lastP;let sc=lp&&lp.t==by&&!lp.gk?lp:null;if(!sc){let bd=1e9;for(const m of sk(by)){const d=hyp(m.x-puck.x,m.y-puck.y);if(d<bd){bd=d;sc=m}}}S.scorer=sc;S.celebT=[atkX(by)-TM[by].dir*110,sc&&sc.y<CY?34:RW-34]}S.score[by]++;S.mode='goal';S.t=170;S.celeb=170;S.goalBy=by;S.msg='MÅL!';S.msgT=170;puck.owner=null;puck.target=null;puck.net=def;puck.vx*=.5;puck.vy*=.5;sfx.horn();sfx.net();S.flash=170}
 /* ---------- goalie ---------- */
 const gcfg=t=>OPT.two?GQ[1]:t==1?GQ[OPT.diff]:GH;
 function goalie(G){const t=G.t,gd=goal(t),cfg=gcfg(t),q=puck;
@@ -329,7 +324,7 @@ function update(){S.cf++;
  puck.hist.push([puck.x,puck.y]);if(puck.hist.length>40)puck.hist.shift();
  {const q=puck;q.trail=q.trail||[];if(!q.owner&&q.net==null&&hyp(q.vx,q.vy)>3.2){q.trail.push([q.x,q.y,q.z]);if(q.trail.length>7)q.trail.shift()}else if(q.trail.length)q.trail.shift()}
  if(S.spark>0)S.spark--;
- if(S.flash>0)S.flash--;if(CONF.length)stepConfetti();if(S.ot1>0)S.ot1--;if(S.hitFx>0)S.hitFx--;if(S.msgT>0)S.msgT--;if(shake>0)shake*=.8;
+ if(S.flash>0)S.flash--;if(S.ot1>0)S.ot1--;if(S.hitFx>0)S.hitFx--;if(S.msgT>0)S.msgT--;if(shake>0)shake*=.8;
  if(S.mode=='play'||S.mode=='goal'||S.mode=='whistle'){
   pickCtl();for(const t of[0,1]){const I=IN[t];for(const p of sk(t)){if(ctl[t]===p)humanStep(p,I);else aiSkater(p)}}
   for(const G of[TM[0].gk,TM[1].gk])goalie(G);
@@ -571,7 +566,6 @@ function draw(){const sx=shake>.3?Math.round((rnd()-.5)*shake):0,sy=shake>.3?Mat
  drawPuck(wx,wy);
  if(S.spark>0){const s2=toS(S.sparkX,S.sparkY),X=Math.round(s2[0]+wx),Y=Math.round(s2[1]+wy)-3,r=12-S.spark;g.fillStyle=S.spark>6?'#ffffff':'#ffe27a';g.fillRect(X-1,Y-1,3,3);for(let i=0;i<4;i++){const a=i*PI/2+PI/4;g.fillRect(X+Math.round(Math.cos(a)*(2+r*.6)),Y+Math.round(Math.sin(a)*(2+r*.6)),1,1)}}
  if(S.hitFx>0){const s2=toS(S.hitX,S.hitY),X=Math.round(s2[0]+wx),Y=Math.round(s2[1]+wy)-6,r=(14-S.hitFx);g.fillStyle='rgba(255,255,255,'+(S.hitFx/14)+')';for(let i=0;i<8;i++){const a=i*PI/4;g.fillRect(X+Math.round(Math.cos(a)*r),Y+Math.round(Math.sin(a)*r*.6),2,1)}}
- drawConfetti();
  hud()}
 function hud(){
  g.fillStyle='rgba(4,10,50,.88)';g.fillRect(VW/2-62,0,124,17);g.fillStyle='#9aa7ff';g.fillRect(VW/2-62,17,124,1);
