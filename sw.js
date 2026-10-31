@@ -1,5 +1,5 @@
-// Ishockey 0.18.4 – gør spillet spilbart offline efter første besøg
-const CACHE = 'ishockey-0.18.4';
+// Ishockey 0.18.5 – gør spillet spilbart offline efter første besøg
+const CACHE = 'ishockey-0.18.5';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
