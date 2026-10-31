@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}</style>
-<title>Ishockey 0.14.1</title>
+<title>Ishockey 0.15.0</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -65,12 +65,12 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.14.1 · Shift-skud</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.15.0 · Hits og one-timer</small><div id="res"></div>
 <div class="grid"><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button><button class="tile rdt" id="tdk"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button></div><button class="gb" id="btnFS" hidden>FULD SKÆRM</button><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-tour"><div class="hd" id="tname">TURNERING</div><div id="tbody"></div><div id="tpick" class="row"><span>HOLD</span><select id="tsel"></select><div class="kit" id="tk"><i></i></div></div><button class="bb" id="tgo">START TURNERING</button><button class="bb" id="tplay">SPIL KAMP</button><button class="gb" id="tnew">NY TURNERING</button><button class="rd" id="tquit">OPGIV TURNERING</button><button class="rd" id="tback">TILBAGE</button></div>
 <div class="pg" id="pg-opt"><div class="hd">INDSTILLINGER</div><button class="gb" id="df">Sværhedsgrad: Normal</button><button class="gb" id="pl">Perioder: 2 min</button><button class="gb" id="ru">Regler: Icing + offside</button><button class="gb" id="sn">Lyd: Til</button><button class="gb" id="tctl">STYRING</button><button class="rd" id="oback">TILBAGE</button></div>
-<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD: Shift, mellemrum eller Z (mobil: den store knap). Med pucken: hold nede for et hårdere skud, slip for at skyde. Uden pucken: tackl den nærmeste modstander.<br>PASS: - eller X (mobil: den lille knap). Afleverer til medspilleren i den retning du peger.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, højre Shift skyder, - afleverer.<br>Spiller 2 (lyseblå ring): WASD, F skyder, G afleverer.</small><button class="rd" id="cback">TILBAGE</button></div>
+<div class="pg" id="pg-ctl"><div class="hd">STYRING</div><small class="ct">Spil på langs eller på tværs af telefonen. Banen går op og ned, og i første periode angriber du opad.<br>Den spiller du styrer har en GRØN ring. Modstanderen med pucken har en GRÅ skygge.<br><br>RETNING: piletaster eller WASD (mobil: træk til venstre side).<br>SKYD: Shift, mellemrum eller Z (mobil: den store knap). Med pucken: hold nede for et hårdere skud, slip for at skyde. Uden pucken: lav et hit på en modstander tæt på, så han vælter. Tryk SKYD mens pucken er på vej til dig, så skyder du den direkte på mål (one-timer).<br>PASS: - eller X (mobil: den lille knap). Afleverer til medspilleren i den retning du peger.<br>PAUSE: P eller Escape.<br><br>2 SPILLERE PÅ ÉT TASTATUR:<br>Spiller 1 (grøn ring): piletaster, højre Shift skyder, - afleverer.<br>Spiller 2 (lyseblå ring): WASD, F skyder, G afleverer.</small><button class="rd" id="cback">TILBAGE</button></div>
 </div></div>
 <script>
 (()=>{'use strict';
@@ -141,14 +141,16 @@ function nearDot(x,y,only){let b=null,bd=1e9;for(let i=0;i<8;i++){if(only=='end'
 function whistle(msg,dot,t){if(S.mode!='play')return;S.mode='whistle';S.t=t||80;S.msg=msg;S.msgT=t||80;S.fo=dot;puck.owner=null;puck.target=null;sfx.whistle()}
 function placeFO(dx,dy){puck.owner=null;puck.net=null;puck.target=null;puck.tgT=0;puck.x=dx;puck.y=dy;puck.z=puck.vx=puck.vy=puck.vz=0;puck.ice=[false,false];puck.lastP=null;
  for(const t of[0,1]){const d=TM[t].dir,pos={C:[-8,0],LW:[-26,-52],RW:[-26,52],LD:[-46,-26],RD:[-46,26]};
-  for(const p of sk(t)){const[al,la]=pos[p.role],lat=la*(d>0?1:-1);p.x=clamp(dx+d*al,16,RL-16);p.y=clamp(dy+lat,13,RW-13);p.vx=p.vy=0;p.fa=d>0?0:PI;p.stun=p.cool=p.chk=p.hold=0;p.fb=0;p.hitCd=0;p.hitBoost=0;p.hitT=null;p.ix=p.iy=0}
+  for(const p of sk(t)){const[al,la]=pos[p.role],lat=la*(d>0?1:-1);p.x=clamp(dx+d*al,16,RL-16);p.y=clamp(dy+lat,13,RW-13);p.vx=p.vy=0;p.fa=d>0?0:PI;p.stun=p.cool=p.chk=p.hold=0;p.fb=0;p.down=0;p.hitCd=0;p.hitBoost=0;p.hitT=null;p.ix=p.iy=0}
   const gd=goal(t),G=TM[t].gk;G.x=gd.gx+gd.face*5;G.y=CY;G.vx=G.vy=0;G.fa=d>0?0:PI}
  REF.x=dx;REF.y=clamp(dy+34,14,RW-14);REF.vx=REF.vy=0;ctl[0]=ctl[1]=null;S.mode='faceoff';S.t=75;S.msg='FACE-OFF';S.msgT=75}
 function dropPuck(){const w=rr(2),d=TM[w].dir;puck.vx=-d*(1.3+rnd()*.7);puck.vy=(rnd()-.5)*.9;const lc=sk(1-w).find(p=>p.role=='C');lc.cool=16;S.mode='play';S.msg='';sfx.shot()}
 function startPeriod(){setDirs();S.clock=S.ot?Math.round(S.len*.25):S.len;placeFO(RL/2,CY)}
 /* ---------- puck ---------- */
 function setOwner(p){puck.owner=p;puck.target=null;puck.tgT=0;puck.lastT=p.t;puck.lastP=p;puck.ice=[false,false];puck.vx=p.vx;puck.vy=p.vy;puck.z=0;puck.vz=0;p.cool=0;
- const hi=ctl.indexOf(p);if(hi>=0&&p.fb>0&&IN[hi].a){p.fb=0;shoot(p,.55,null)}p.fb=0}
+ const hi=ctl.indexOf(p);if(hi>=0&&p.fb>0){p.fb=0;oneTimer(p);return}p.fb=0}
+/* one-timer: shoot pressed while the puck was on its way; fire straight at goal on contact */
+function oneTimer(p){const gp=goalPoint(p,1,true);shoot(p,.85,gp);S.ot1=40;S.ot1x=p.x;S.ot1y=p.y}
 function release(p,dx,dy,sp,vz){const[bx,by]=blade(p),m=hyp(dx,dy)||1;dx/=m;dy/=m;puck.owner=null;puck.target=null;puck.tgT=0;puck.x=bx;puck.y=by;puck.vx=dx*sp+p.vx*.3;puck.vy=dy*sp+p.vy*.3;puck.z=.3;puck.vz=vz;puck.lastT=p.t;puck.lastP=p;p.cool=14;p.hold=0;
  puck.ice=[false,false];puck.ice[p.t]=uOf(p.x,p.t)<.5;puck.from=p.t;puck.hum=false;puck.gmiss=null}
 function goalPoint(p,pw,hum){const t=p.t,gx=atkX(t),side=rnd()<.5?-1:1;return[gx,CY+side*(hum?GWH-2-rnd()*3:GWH-rnd()*14)]}
@@ -201,7 +203,7 @@ function puckStep(){const q=puck;
  // pickup: the intended receiver collects easily, opponents have to be right on the pass line
  if(q.z<4){const tg=q.target;let best=null,bd=1e9;
   for(const p of ALL){if(p.gk||p.cool>0||p.stun>0)continue;const[bx,by]=blade(p),d1=hyp(q.x-bx,q.y-by),d2=hyp(q.x-p.x,q.y-p.y),d=Math.min(d1,d2+2);
-   const R=p===tg?13:(tg&&p.t!=tg.t?5:7);if(d<R){if(p===tg){best=p;bd=-1;break}if(d<bd){bd=d;best=p}}}
+   const R=p===tg||p.fb>0?13:(tg&&p.t!=tg.t?5:7);if(d<R){if(p===tg){best=p;bd=-1;break}if(d<bd){bd=d;best=p}}}
   if(best){if(best===tg){setOwner(best)}else{const rs=hyp(q.vx-best.vx,q.vy-best.vy),mateSide=tg&&best.t==tg.t;
    if(rs<4.4||mateSide||rnd()<(rs<7?.55:.2)){if(rs<4.4||mateSide||rnd()<.85)setOwner(best);else{q.vx*=.5;q.vy*=.5;best.cool=6}}
    else{q.vx*=.6;q.vy*=.6;q.vx+=(rnd()-.5)*1.2;q.vy+=(rnd()-.5)*1.2;best.cool=8;q.ice=[false,false];q.lastT=best.t;q.target=null}}}}
@@ -252,11 +254,13 @@ function aiCarrier(p){const t=p.t,d=TM[t].dir,gx=atkX(t),dg=hyp(gx-p.x,CY-p.y),u
   if(best&&(pressed&&bs>-30||bs>(u>.6?30:12)&&rnd()<.5)){passTo(p,best);return}
   if(pressed&&u<.4){const wy=p.y<CY?20:RW-20;shoot(p,.35,[p.x+d*160,wy]);return}
   if(inRange&&rnd()<.3){shoot(p,.6+rnd()*.4,goalPoint(p,1));return}}}
+/* is a loose puck on its way to this player? (a pass to him, or a puck sliding towards him) */
+function incoming(p){const q=puck;if(q.owner||q.net!=null)return false;if(q.target===p)return true;const dx=p.x-q.x,dy=p.y-q.y,d=hyp(dx,dy),sp=hyp(q.vx,q.vy);if(d>60||sp<.8)return d<14;return (q.vx*dx+q.vy*dy)/(d*sp)>.75}
 function doCheck(p,hum){if(p.chkCd>0||p.stun>0)return;p.chk=12;p.chkCd=45;if(!hum)return;
- let t=null,bd=1e9;for(const e of sk(1-p.t)){const d=hyp(e.x-p.x,e.y-p.y),r=puck.owner===e?22:17;if(d<r&&d-(puck.owner===e?6:0)<bd){bd=d;t=e}}
+ let t=null,bd=1e9;for(const e of sk(1-p.t)){const d=hyp(e.x-p.x,e.y-p.y),r=puck.owner===e?24:20;if(d<r&&d-(puck.owner===e?6:0)<bd){bd=d;t=e}}
  p.hitT=t;p.chk=t?10:8;p.chkCd=28;p.hitBoost=t?10:0}
 /* a human hit that connects: knock the opponent down and the puck loose */
-function landHit(H,V){V.hitCd=30;V.stun=34;const a=Math.atan2(V.y-H.y,V.x-H.x);V.vx+=Math.cos(a)*2.2;V.vy+=Math.sin(a)*2.2;H.vx*=.4;H.vy*=.4;H.hitBoost=0;H.hitT=null;
+function landHit(H,V){V.hitCd=36;V.stun=46;V.down=46;V.fallA=Math.atan2(V.y-H.y,V.x-H.x);S.hitFx=14;S.hitX=V.x;S.hitY=V.y;const a=Math.atan2(V.y-H.y,V.x-H.x);V.vx+=Math.cos(a)*2.2;V.vy+=Math.sin(a)*2.2;H.vx*=.4;H.vy*=.4;H.hitBoost=0;H.hitT=null;
  if(puck.owner===V){V.cool=28;H.cool=0;setOwner(H)}sfx.hit()}
 /* ---------- human ---------- */
 function pickCtl(){for(const t of[0,1]){if(OPT.auto||(t==1&&!OPT.two)){ctl[t]=null;continue}
@@ -269,7 +273,8 @@ function humanStep(p,I){let m=hyp(I.x,I.y);if(m>1){p.ix=I.x/m;p.iy=I.y/m}else if
  if(puck.target===p&&!puck.owner&&m<.15)meetPuck(p,.9);
  const own=puck.owner===p;
  // A: with the puck it only shoots (hold to charge, release to shoot); without the puck it checks
- if(I.aP){if(own)p.hold=1;else doCheck(p,true)}
+ if(I.aP){if(own)p.hold=1;else if(incoming(p))p.fb=34;else doCheck(p,true)}
+ if(p.fb>0&&!own)p.fb--;
  if(own&&p.hold>0){if(I.a)p.hold++;if(I.aR){const h=p.hold;p.hold=0;shoot(p,clamp((h-4)/32,.2,1),null)}}
  else if(!I.a)p.hold=0;
  // B: pass to the teammate in the direction you point
@@ -278,7 +283,7 @@ function humanStep(p,I){let m=hyp(I.x,I.y);if(m>1){p.ix=I.x/m;p.iy=I.y/m}else if
 /* ---------- movement ---------- */
 function movePlayer(p){if(p.hitCd>0)p.hitCd--;if(p.hitBoost>0)p.hitBoost--;if(p.chkCd>0)p.chkCd--;if(p.cool>0)p.cool--;
  const sp=1.9*(p.t==1&&!OPT.two?DSP[OPT.diff]:1)*(puck.owner===p?.94:1);
- if(p.stun>0){p.stun--;p.ix=p.iy=0}
+ if(p.stun>0){p.stun--;p.ix=p.iy=0}if(p.down>0)p.down--;
  let tx=p.ix*sp,ty=p.iy*sp;if(p.chk>0){p.chk--;tx+=Math.cos(p.fa)*1.2;ty+=Math.sin(p.fa)*1.2}
  const m=hyp(p.ix,p.iy),rate=m>.1?(p.stun>0?0:.085):.02;p.vx+=(tx-p.vx)*rate;p.vy+=(ty-p.vy)*rate;
  const s=hyp(p.vx,p.vy);if(s>2.6){p.vx*=2.6/s;p.vy*=2.6/s}
@@ -291,14 +296,14 @@ function movePlayer(p){if(p.hitCd>0)p.hitCd--;if(p.hitBoost>0)p.hitBoost--;if(p.
  p.ph+=hyp(p.vx,p.vy)*.35}
 function collide(){const A=[...sk(0),...sk(1)];for(let i=0;i<A.length;i++)for(let j=i+1;j<A.length;j++){const a=A[i],b=A[j],dx=b.x-a.x,dy=b.y-a.y,d=hyp(dx,dy);if(d<7&&d>.01){const nx=dx/d,ny=dy/d,push=(7-d)*.5;a.x-=nx*push;a.y-=ny*push;b.x+=nx*push;b.y+=ny*push;
   if(a.t!=b.t&&S.mode=='play'){const c=((a.vx-b.vx)*nx+(a.vy-b.vy)*ny),ha=a.vx*nx+a.vy*ny,hb=-(b.vx*nx+b.vy*ny),H=(a.hitBoost>0&&a.chk>0)?a:(b.hitBoost>0&&b.chk>0)?b:ha>hb?a:b,V=H===a?b:a,st=Math.max(c,H.hitBoost>0?2.2:c)+(H.chk>0?1:0);
-   const boost=H.hitBoost>0;if(boost&&H.chk>0&&c>.5&&V.hitCd<=0||c>1.1&&st>1.7&&V.hitCd<=0){if(boost)H.hitBoost=0;V.hitCd=30;V.stun=22+Math.round((st-1.7)*14);const sg=H===a?1:-1;V.vx+=nx*sg*st*.55;V.vy+=ny*sg*st*.55;H.vx*=.6;H.vy*=.6;if(puck.owner===V){puck.owner=null;puck.vx=V.vx*.8+(rnd()-.5);puck.vy=V.vy*.8+(rnd()-.5);puck.lastT=H.t;puck.ice=[false,false];V.cool=28}sfx.hit();}}}}}
+   const boost=H.hitBoost>0;if(boost&&H.chk>0&&c>.5&&V.hitCd<=0||c>1.1&&st>1.7&&V.hitCd<=0){if(boost)H.hitBoost=0;V.hitCd=30;V.stun=22+Math.round((st-1.7)*14);V.down=V.stun;V.fallA=Math.atan2(V.y-H.y,V.x-H.x);const sg=H===a?1:-1;V.vx+=nx*sg*st*.55;V.vy+=ny*sg*st*.55;H.vx*=.6;H.vy*=.6;if(puck.owner===V){puck.owner=null;puck.vx=V.vx*.8+(rnd()-.5);puck.vy=V.vy*.8+(rnd()-.5);puck.lastT=H.t;puck.ice=[false,false];V.cool=28}sfx.hit();}}}}}
 /* ---------- referee ---------- */
 function refStep(){const R=REF,tx=clamp(puck.x*.7+RL/2*.3,40,RL-40),ty=clamp(puck.y+(puck.y<CY?30:-30),18,RW-18);R.vx+=(clamp((tx-R.x)*.02,-1.2,1.2)-R.vx)*.1;R.vy+=(clamp((ty-R.y)*.02,-1.2,1.2)-R.vy)*.1;R.x+=R.vx;R.y+=R.vy;if(hyp(R.vx,R.vy)>.2)R.fa=Math.atan2(R.vy,R.vx);R.ph+=hyp(R.vx,R.vy)*.35}
 /* ---------- main update ---------- */
 function update(){S.cf++;
  if(S.mode=='menu')return;
  puck.hist.push([puck.x,puck.y]);if(puck.hist.length>40)puck.hist.shift();
- if(S.flash>0)S.flash--;if(S.msgT>0)S.msgT--;if(shake>0)shake*=.8;
+ if(S.flash>0)S.flash--;if(S.ot1>0)S.ot1--;if(S.hitFx>0)S.hitFx--;if(S.msgT>0)S.msgT--;if(shake>0)shake*=.8;
  if(S.mode=='play'||S.mode=='goal'||S.mode=='whistle'){
   pickCtl();for(const t of[0,1]){const I=IN[t];for(const p of sk(t)){if(ctl[t]===p)humanStep(p,I);else aiSkater(p)}}
   for(const G of[TM[0].gk,TM[1].gk])goalie(G);
@@ -394,7 +399,17 @@ function line(x0,y0,x1,y1,c,tipc){x0=Math.round(x0);y0=Math.round(y0);x1=Math.ro
 function ell(X,Y,rx,ry,col,fill){g.fillStyle=col;for(let dy=-ry;dy<=ry;dy++){const w=Math.round(rx*Math.sqrt(Math.max(0,1-(dy*dy)/(ry*ry))));if(fill||Math.abs(dy)==ry)g.fillRect(X-w,Y+dy,2*w+1,1);else{g.fillRect(X-w,Y+dy,2,1);g.fillRect(X+w-1,Y+dy,2,1)}}}
 const SKIN='#e8c39a';
 const sv=p=>{const s=toS(p.x,p.y),b=blade(p),bs=toS(b[0],b[1]);return{X:s[0],Y:s[1],f:p.fa-PI/2,bX:bs[0],bY:bs[1]}};
+/* knocked-down player: lying on his side in the direction he was hit, stick on the ice, stars over the head */
+function drawDown(p,x,y,k,mark){const fa=p.fallA||0,sx=Math.sin(fa)>=0?1:-1;
+ g.fillStyle='rgba(10,24,60,.32)';g.fillRect(x-8,y-2,17,4);
+ if(mark=='p1'||mark=='p2')ell(x,y,10,4,mark=='p1'?'#20e04a':'#5fe0ff',false);
+ const hx=x+sx*6,lx=x-sx*7;g.fillStyle=k.p;g.fillRect(lx-2,y-3,5,3);g.fillStyle='#222a38';g.fillRect(lx-sx*3-1,y-3,2,3);
+ g.fillStyle=k.j;g.fillRect(x-4,y-5,9,5);g.fillStyle=k.t;g.fillRect(x-4,y-3,9,1);
+ g.fillStyle=k.h;g.fillRect(hx-2,y-5,5,5);g.fillStyle='rgba(255,255,255,.35)';g.fillRect(hx-1,y-5,2,1);
+ line(x-6,y+2,x+7,y+1,'#d9b36a','#1a1a1a');
+ const t=(S.cf>>2)%4;g.fillStyle='#ffe600';for(let i=0;i<3;i++){const a=t*.6+i*2.1;g.fillRect(hx+Math.round(Math.cos(a)*4),y-9+Math.round(Math.sin(a)*1.5),1,1)}}
 function drawSkater(p,wx,wy,mark){const k=TM[p.t].kit,v=sv(p),x=Math.round(v.X+wx),y=Math.round(v.Y+wy),f=v.f,cs=Math.cos(f),sn=Math.sin(f),mv=hyp(p.vx,p.vy)>.25,sw=mv?Math.round(Math.sin(p.ph)*1.6):0,stn=p.stun>0;
+ if(p.down>10){drawDown(p,x,y,k,mark);return}
  if(mark=='opp')ell(x,y,9,4,'rgba(60,64,72,.45)',true);
  g.fillStyle='rgba(10,24,60,.3)';g.fillRect(x-4,y-1,10,3);
  if(mark=='p1'){ell(x,y,9,4,'#20e04a',false);ell(x,y,8,3,'#20e04a',false)}
@@ -429,6 +444,8 @@ function draw(){const sx=shake>.3?Math.round((rnd()-.5)*shake):0,sy=shake>.3?Mat
  const ents=[...ALL,REF];ents.sort((a,b)=>b.x-a.x);
  for(const e of ents){if(e===REF)drawRef(wx,wy);else if(e.gk)drawGoalie(e,wx,wy);else drawSkater(e,wx,wy,markOf(e))}
  drawPuck(wx,wy);
+ if(S.hitFx>0){const s2=toS(S.hitX,S.hitY),X=Math.round(s2[0]+wx),Y=Math.round(s2[1]+wy)-6,r=(14-S.hitFx);g.fillStyle='rgba(255,255,255,'+(S.hitFx/14)+')';for(let i=0;i<8;i++){const a=i*PI/4;g.fillRect(X+Math.round(Math.cos(a)*r),Y+Math.round(Math.sin(a)*r*.6),2,1)}}
+ if(S.ot1>0){const s2=toS(S.ot1x,S.ot1y);txt('ONE-TIMER!',Math.round(s2[0]+wx),Math.round(s2[1]+wy)-30-(40-S.ot1)/4,'#ffe600',1,'c','#02052a')}
  hud()}
 function hud(){
  g.fillStyle='rgba(4,10,50,.88)';g.fillRect(VW/2-62,0,124,17);g.fillStyle='#9aa7ff';g.fillRect(VW/2-62,17,124,1);
@@ -551,7 +568,7 @@ $('btnFS').addEventListener('click',toggleFS);
 if('serviceWorker' in navigator&&location.protocol==='https:'&&document.querySelector('link[rel="manifest"]')){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 let last=0,acc=0;function loop(n){const dt=Math.min(100,n-last);last=n;if(S.mode!='menu'&&!S.paused){acc+=dt;while(acc>=16.667){update();acc-=16.667}}else acc=0;if(S.mode!='menu')draw();requestAnimationFrame(loop)}
 fill();lab();fit();newTeams(0,1);buildRink();setDirs();placeFO(RL/2,CY);S.mode='menu';
-window.__H={arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY}};
+window.__H={passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY}};
 requestAnimationFrame(loop);
 })();
 </script>
