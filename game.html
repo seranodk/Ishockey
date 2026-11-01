@@ -1,4 +1,4 @@
-<title>Ishockey 0.20.3</title>
+<title>Ishockey 0.21.0</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -52,7 +52,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.20.3 · Hvide bogstaver</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.0 · Glidende</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -67,6 +67,7 @@ let VW=432,VH=243;const RL=640,RW=272,CR=72,GLN=36,GWH=13,ND=11,NETH=9,BH=11,PX=
 const WW=RW+2*PY,WH=RL+2*PX;
 const toS=(x,y)=>[PY+y,PX+RL-x];
 const $=id=>document.getElementById(id),cv=$('cv'),g=cv.getContext('2d');cv.width=VW;cv.height=VH;g.imageSmoothingEnabled=false;
+let SK=1;const Q=v=>Math.round(v*SK)/SK; /* SK: backing pixels per game pixel; Q snaps a coordinate to that finer grid */
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,rnd=Math.random,hyp=Math.hypot,PI=Math.PI;
 const rr=n=>Math.floor(rnd()*n);
 /* ---------- clubs ---------- */
@@ -435,14 +436,14 @@ function buildStands(){const AR=arenaOf(),H=TM[0].kit,A=TM[1].kit,skin=['#f0c8a0
   STANDS[f]=c}}
 function ptxtS(x,s,X,Y,c,k){x.fillStyle=c;let cx=X;for(const ch of s){const gl=GL[ch];if(gl)for(let i=0;i<15;i++)if(gl[i]=='1')x.fillRect(cx+(i%3)*k,Y+((i/3)|0)*k,k,k);cx+=4*k}}
 /* ---------- render: sprites (screen space) ---------- */
-function line(x0,y0,x1,y1,c,tipc){x0=Math.round(x0);y0=Math.round(y0);x1=Math.round(x1);y1=Math.round(y1);const dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1;let e=dx+dy,n=0;const pts=[];for(;;){pts.push([x0,y0]);if(x0==x1&&y0==y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx}if(e2<=dx){e+=dx;y0+=sy}if(++n>80)break}
- pts.forEach((p,i)=>{g.fillStyle=i>=pts.length-2?(tipc||c):c;g.fillRect(p[0],p[1],1,1)})}
+function line(x0,y0,x1,y1,c,tipc){const fx=Q(x0)-Math.round(Q(x0)),fy=Q(y0)-Math.round(Q(y0));x0=Math.round(x0-fx);y0=Math.round(y0-fy);x1=Math.round(x1-fx);y1=Math.round(y1-fy);const dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1;let e=dx+dy,n=0;const pts=[];for(;;){pts.push([x0,y0]);if(x0==x1&&y0==y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx}if(e2<=dx){e+=dx;y0+=sy}if(++n>80)break}
+ pts.forEach((p,i)=>{g.fillStyle=i>=pts.length-2?(tipc||c):c;g.fillRect(p[0]+fx,p[1]+fy,1,1)})}
 /* pixel ellipse under a player's feet: ring (outline) or filled */
 function ell(X,Y,rx,ry,col,fill){g.fillStyle=col;for(let dy=-ry;dy<=ry;dy++){const w=Math.round(rx*Math.sqrt(Math.max(0,1-(dy*dy)/(ry*ry))));if(fill||Math.abs(dy)==ry)g.fillRect(X-w,Y+dy,2*w+1,1);else{g.fillRect(X-w,Y+dy,2,1);g.fillRect(X+w-1,Y+dy,2,1)}}}
 const SKIN='#e8c39a';
 const sv=p=>{const s=toS(p.x,p.y),b=blade(p),bs=toS(b[0],b[1]);return{X:s[0],Y:s[1],f:p.fa-PI/2,bX:bs[0],bY:bs[1]}};
 /* pixel helpers for rotated limbs */
-function stamp(x0,y0,x1,y1,w,col){g.fillStyle=col;const n=Math.max(1,Math.ceil(hyp(x1-x0,y1-y0)));const o=w>>1;for(let i=0;i<=n;i++){const t=i/n;g.fillRect(Math.round(x0+(x1-x0)*t)-o,Math.round(y0+(y1-y0)*t)-o,w,w)}}
+function stamp(x0,y0,x1,y1,w,col){g.fillStyle=col;const fx=Q(x0)-Math.round(Q(x0)),fy=Q(y0)-Math.round(Q(y0)),n=Math.max(1,Math.ceil(hyp(x1-x0,y1-y0)));const o=w>>1;for(let i=0;i<=n;i++){const t=i/n;g.fillRect(Math.round(x0-fx+(x1-x0)*t)-o+fx,Math.round(y0-fy+(y1-y0)*t)-o+fy,w,w)}}
 /* knocked-down player in three phases:
    stumble (body tips over, arms fly up), slide (lying stretched out on the ice, stick spinning away), get up (on one knee, then upright) */
 function drawDown(p,x,y,k,mark){const M=p.downMax||46,t=1-p.down/M,fa=p.fallA||0,ux=Math.sin(fa),uy=-Math.cos(fa),px=-uy,py=ux;
@@ -514,7 +515,7 @@ function stickAndMark(p,x,y,v,wx,wy,mark,hyy,bx){const f=v.f,hx=bx+Math.round(Ma
  if(p.hold>0||p.swing>0){const back=p.hold>0?Math.min(1,p.hold/24):0,thru=p.swing>0?p.swing/10:0,a=f+.55+back*1.9-thru*1.3,r=9+back*2;ex=x+Math.round(Math.cos(a)*r);ey=y+Math.round(Math.sin(a)*r)-Math.round(back*4+thru*3)}
  line(hx,y-6,ex,ey,'#d9b36a','#1a1a1a');
  if(mark=='p1'||mark=='p2'){g.fillStyle=mark=='p1'?'#20e04a':'#5fe0ff';const a=hyy-6;g.fillRect(x-2,a,5,1);g.fillRect(x-1,a+1,3,1);g.fillRect(x,a+2,1,1)}}
-function drawSkater(p,wx,wy,mark){const k=TM[p.t].kit,v=sv(p),x=Math.round(v.X+wx),y=Math.round(v.Y+wy),f=v.f,cs=Math.cos(f),sn=Math.sin(f),mv=hyp(p.vx,p.vy)>.25,sw=mv?Math.round(Math.sin(p.ph)*1.6):0,stn=p.stun>0;
+function drawSkater(p,wx,wy,mark){const k=TM[p.t].kit,v=sv(p),x=Q(v.X+wx),y=Q(v.Y+wy),f=v.f,cs=Math.cos(f),sn=Math.sin(f),mv=hyp(p.vx,p.vy)>.25,sw=mv?Math.round(Math.sin(p.ph)*1.6):0,stn=p.stun>0;
  if(p.down>0){drawDown(p,x,y,k,mark);return}
  if(mark=='opp')ell(x,y,9,4,'rgba(60,64,72,.45)',true);
  g.fillStyle='rgba(10,24,60,.3)';g.fillRect(x-4,y-1,10,3);
@@ -542,7 +543,7 @@ function drawSkater(p,wx,wy,mark){const k=TM[p.t].kit,v=sv(p),x=Math.round(v.X+w
  if(mark=='p1'||mark=='p2'){g.fillStyle=mark=='p1'?'#20e04a':'#5fe0ff';const a=hy-6;g.fillRect(x-2,a,5,1);g.fillRect(x-1,a+1,3,1);g.fillRect(x,a+2,1,1)}}
 /* goalie: standing stance, or a save pose - butterfly (pads flat out), glove save, blocker save, pad kick.
    The poses only show the save; whether he saves is decided exactly as before. */
-function drawGoalie(p,wx,wy){const k=TM[p.t].kit,v=sv(p),x=Math.round(v.X+wx),y=Math.round(v.Y+wy),cs=Math.cos(v.f),sn=Math.sin(v.f),A=p.anim,T=A?A.t:null,sd=A?A.side:1;
+function drawGoalie(p,wx,wy){const k=TM[p.t].kit,v=sv(p),x=Q(v.X+wx),y=Q(v.Y+wy),cs=Math.cos(v.f),sn=Math.sin(v.f),A=p.anim,T=A?A.t:null,sd=A?A.side:1;
  const pad='#f4f4f4',head=k.h==='#111111'?'#e8e8e8':'#f4f4f4',glove='#3b6fe0';
  const helmet=(hx,hy)=>{g.fillStyle=head;g.fillRect(hx-3,hy,7,6);g.fillStyle='#222a38';if(sn>-.3){g.fillRect(hx-2+Math.round(cs*1.2),hy+2,4,3);g.fillStyle='#8a94a6';g.fillRect(hx-2+Math.round(cs*1.2),hy+3,4,1)}};
  const torso=(tx,ty)=>{g.fillStyle=k.j;g.fillRect(tx-5,ty,11,8);g.fillStyle=k.t;g.fillRect(tx-5,ty+4,11,1)};
@@ -567,16 +568,16 @@ function drawGoalie(p,wx,wy){const k=TM[p.t].kit,v=sv(p),x=Math.round(v.X+wx),y=
  else{g.fillStyle=pad;g.fillRect(x+ln-8,y-13,3,5);g.fillRect(x+ln+6,y-13,3,5);g.fillStyle=glove;g.fillRect(x+ln+6,y-13,3,2)}
  helmet(x+ln,y-20);
  line(x+8,y-4,x+10,y+1,'#d9b36a','#1a1a1a')}
-function drawRef(wx,wy){const R=REF,s=toS(R.x,R.y),x=Math.round(s[0]+wx),y=Math.round(s[1]+wy),sw=Math.round(Math.sin(R.ph)*1.5);g.fillStyle='rgba(10,24,60,.3)';g.fillRect(x-4,y-1,10,3);g.fillStyle='#111';g.fillRect(x-3,y-6,3,5);g.fillRect(x+1,y-6,3,5);g.fillStyle='#cfd8e3';g.fillRect(x-4+(sw>0?sw:0),y-1,4,1);g.fillRect(x+1,y-1,4,1);
+function drawRef(wx,wy){const R=REF,s=toS(R.x,R.y),x=Q(s[0]+wx),y=Q(s[1]+wy),sw=Math.round(Math.sin(R.ph)*1.5);g.fillStyle='rgba(10,24,60,.3)';g.fillRect(x-4,y-1,10,3);g.fillStyle='#111';g.fillRect(x-3,y-6,3,5);g.fillRect(x+1,y-6,3,5);g.fillStyle='#cfd8e3';g.fillRect(x-4+(sw>0?sw:0),y-1,4,1);g.fillRect(x+1,y-1,4,1);
  for(let i=0;i<7;i++){g.fillStyle=i%2?'#f2f2f2':'#111';g.fillRect(x-4,y-12+i,9,1)}g.fillStyle='#111';g.fillRect(x-3,y-17,7,5);g.fillStyle=SKIN;g.fillRect(x-2,y-15,4,2)}
-function drawPuck(wx,wy){const q=puck,s=toS(q.x,q.y),x=Math.round(s[0]+wx),y=Math.round(s[1]+wy);
+function drawPuck(wx,wy){const q=puck,s=toS(q.x,q.y),x=Q(s[0]+wx),y=Q(s[1]+wy);
  const T=q.trail||[];T.forEach((t,i)=>{const a=(i+1)/(T.length+1),ts=toS(t[0],t[1]);g.fillStyle='rgba(30,40,70,'+(a*.45)+')';g.fillRect(Math.round(ts[0]+wx)-1+(i<T.length-2?1:0),Math.round(ts[1]+wy)-1-Math.round(t[2]*.9),i<T.length-2?2:3,2)});g.fillStyle='rgba(10,24,60,.35)';g.fillRect(x-1,y,4,2);const z=Math.round(q.z*.9);g.fillStyle='#0a0a12';g.fillRect(x-1,y-1-z,4,2);g.fillStyle='#5a6072';g.fillRect(x,y-1-z,2,1)}
 /* ---------- render: frame ---------- */
 function markOf(e){if(ctl[0]===e)return'p1';if(OPT.two&&ctl[1]===e)return'p2';if(puck.owner===e&&ctl[e.t]!==e)return'opp';return null}
-function draw(){const sx=shake>.3?Math.round((rnd()-.5)*shake):0,sy=shake>.3?Math.round((rnd()-.5)*shake):0;
+function draw(){g.setTransform(SK,0,0,SK,0,0);g.imageSmoothingEnabled=false;const sx=0,sy=0;
  g.fillStyle='#10132e';g.fillRect(0,0,VW,VH);
  if(!ICE)buildRink();
- const fr=S.celeb>0&&S.goalBy>=0&&(S.cf>>3)&1?(S.goalBy==0?1:2):0;const wx=-Math.round(camX)+sx,wy=-Math.round(camY)+sy;
+ const fr=S.celeb>0&&S.goalBy>=0&&(S.cf>>3)&1?(S.goalBy==0?1:2):0;const wx=-Q(camX)+sx,wy=-Q(camY)+sy;
  g.drawImage(STANDS[fr]||STANDS[0],wx,wy);g.drawImage(ICE,wx,wy);
  // goal light + net glow behind the net
  if(S.flash>0&&S.cf%12<7){for(const t of[0,1]){if(S.goalBy!=1-t)continue;const gd=goal(t),a=toS(gd.x1,gd.y0),b=toS(gd.x0,gd.y1),lp=toS(gd.face>0?gd.x0-4:gd.x1+4,CY);
@@ -584,9 +585,9 @@ function draw(){const sx=shake>.3?Math.round((rnd()-.5)*shake):0,sy=shake>.3?Mat
  const ents=[...ALL,REF];ents.sort((a,b)=>b.x-a.x);
  for(const e of ents){if(e===REF)drawRef(wx,wy);else if(e.gk)drawGoalie(e,wx,wy);else drawSkater(e,wx,wy,markOf(e))}
  drawPuck(wx,wy);
- if(S.gkHold){const h=S.gkHold,s2=toS(h.G.x,h.G.y),X=Math.round(s2[0]+wx)-11,Y=Math.round(s2[1]+wy)-30,f=Math.max(0,h.t/HOLD);g.fillStyle='#02052a';g.fillRect(X-1,Y-1,24,5);g.fillStyle=f>.5?'#ffe600':f>.25?'#ff9a2e':'#ff4a3c';g.fillRect(X,Y,Math.round(22*f),3);if(h.ai<0&&(h.G.t==0||OPT.two))txt('PASS',X+11,Y-7,'#ffffff',1,'c','#02052a')}
- if(S.spark>0){const s2=toS(S.sparkX,S.sparkY),X=Math.round(s2[0]+wx),Y=Math.round(s2[1]+wy)-3,r=12-S.spark;g.fillStyle=S.spark>6?'#ffffff':'#ffe27a';g.fillRect(X-1,Y-1,3,3);for(let i=0;i<4;i++){const a=i*PI/2+PI/4;g.fillRect(X+Math.round(Math.cos(a)*(2+r*.6)),Y+Math.round(Math.sin(a)*(2+r*.6)),1,1)}}
- if(S.hitFx>0){const s2=toS(S.hitX,S.hitY),X=Math.round(s2[0]+wx),Y=Math.round(s2[1]+wy)-6,r=(14-S.hitFx);g.fillStyle='rgba(255,255,255,'+(S.hitFx/14)+')';for(let i=0;i<8;i++){const a=i*PI/4;g.fillRect(X+Math.round(Math.cos(a)*r),Y+Math.round(Math.sin(a)*r*.6),2,1)}}
+ if(S.gkHold){const h=S.gkHold,s2=toS(h.G.x,h.G.y),X=Q(s2[0]+wx)-11,Y=Q(s2[1]+wy)-30,f=Math.max(0,h.t/HOLD);g.fillStyle='#02052a';g.fillRect(X-1,Y-1,24,5);g.fillStyle=f>.5?'#ffe600':f>.25?'#ff9a2e':'#ff4a3c';g.fillRect(X,Y,Math.round(22*f),3);if(h.ai<0&&(h.G.t==0||OPT.two))txt('PASS',X+11,Y-7,'#ffffff',1,'c','#02052a')}
+ if(S.spark>0){const s2=toS(S.sparkX,S.sparkY),X=Q(s2[0]+wx),Y=Q(s2[1]+wy)-3,r=12-S.spark;g.fillStyle=S.spark>6?'#ffffff':'#ffe27a';g.fillRect(X-1,Y-1,3,3);for(let i=0;i<4;i++){const a=i*PI/2+PI/4;g.fillRect(X+Math.round(Math.cos(a)*(2+r*.6)),Y+Math.round(Math.sin(a)*(2+r*.6)),1,1)}}
+ if(S.hitFx>0){const s2=toS(S.hitX,S.hitY),X=Q(s2[0]+wx),Y=Q(s2[1]+wy)-6,r=(14-S.hitFx);g.fillStyle='rgba(255,255,255,'+(S.hitFx/14)+')';for(let i=0;i<8;i++){const a=i*PI/4;g.fillRect(X+Math.round(Math.cos(a)*r),Y+Math.round(Math.sin(a)*r*.6),2,1)}}
  hud()}
 function hud(){
  g.fillStyle='rgba(4,10,50,.88)';g.fillRect(VW/2-62,0,124,17);g.fillStyle='#9aa7ff';g.fillRect(VW/2-62,17,124,1);
@@ -700,10 +701,11 @@ $('df').onclick=()=>{OPT.diff=(OPT.diff+1)%3;saveOpt();lab()};$('pl').onclick=()
 /* ---------- loop ---------- */
 /* the canvas adapts to the screen: tall and narrow in portrait (controls below), wide in landscape */
 function fit(){setTimeout(()=>{try{joyRest()}catch(e){}},0);const w=$('app').clientWidth,h=$('app').clientHeight,port=h>w,tch=$('tc').classList.contains('on'),ah=port&&tch?Math.max(200,h-110):h;
- if(port){VW=320;VH=clamp(Math.round(320*ah/w),243,720)}else{VH=243;VW=clamp(Math.round(243*w/ah),324,560)}
- if(cv.width!==VW||cv.height!==VH){cv.width=VW;cv.height=VH;g.imageSmoothingEnabled=false}
- const s=Math.min(w/VW,ah/VH);cv.style.width=Math.floor(VW*s)+'px';cv.style.height=Math.floor(VH*s)+'px';cv.style.marginBottom=(h-ah)+'px'}
-addEventListener('resize',fit);
+ let nW,nH;if(port){nW=320;nH=clamp(Math.round(320*ah/w),243,720)}else{nH=243;nW=clamp(Math.round(243*w/ah),324,560)}
+ const playing=S.mode!='menu',same=(nW>nH)==(VW>VH)&&Math.abs(nH-VH)/VH<.12&&Math.abs(nW-VW)/VW<.12;if(!playing||!same){VW=nW;VH=nH}
+ const s=Math.min(w/VW,ah/VH),nK=clamp(Math.round(s*(window.devicePixelRatio||1)),1,3);
+ if(cv.width!==VW*nK||cv.height!==VH*nK){SK=nK;cv.width=VW*SK;cv.height=VH*SK;g.imageSmoothingEnabled=false}cv.style.width=Math.floor(VW*s)+'px';cv.style.height=Math.floor(VH*s)+'px';cv.style.marginBottom=(h-ah)+'px'}
+let fitQ=0;addEventListener('resize',()=>{if(!fitQ)fitQ=requestAnimationFrame(()=>{fitQ=0;fit()})});
 /* ---------- full screen / app ---------- */
 const standalone=(window.matchMedia&&matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches)||navigator.standalone===true;
 const fsSupported=!!(document.fullscreenEnabled||document.webkitFullscreenEnabled);
@@ -714,9 +716,18 @@ $('btnFS').hidden=standalone||!fsSupported;$('installHint').hidden=standalone||f
 $('btnFS').addEventListener('click',toggleFS);
 ['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>setTimeout(fit,60)));
 if('serviceWorker' in navigator&&location.protocol==='https:'&&document.querySelector('link[rel="manifest"]')){navigator.serviceWorker.register('sw.js').catch(()=>{})}
-let last=0,acc=0;function loop(n){const dt=Math.min(100,n-last);last=n;if(S.mode!='menu'&&!S.paused){acc+=dt;while(acc>=16.667){update();acc-=16.667}}else acc=0;if(S.mode!='menu')draw();requestAnimationFrame(loop)}
+const STEP=1000/60;let last=0,acc=0,camPX=0,camPY=0;
+/* remember where everything was before an update, so a frame drawn between two updates can be placed in between */
+function snap(){for(const o of ALL){o.px=o.x;o.py=o.y}if(REF){REF.px=REF.x;REF.py=REF.y}puck.px=puck.x;puck.py=puck.y;puck.pz=puck.z;camPX=camX;camPY=camY}
+function drawLerp(a){const L=(o,z)=>{if(o.px===undefined)return;o._x=o.x;o._y=o.y;if(hyp(o.x-o.px,o.y-o.py)<30){o.x=o.px+(o.x-o.px)*a;o.y=o.py+(o.y-o.py)*a}if(z){o._z=o.z;o.z=o.pz+(o.z-o.pz)*a}};
+ const cx=camX,cy=camY;if(Math.abs(camX-camPX)<40&&Math.abs(camY-camPY)<40){camX=camPX+(camX-camPX)*a;camY=camPY+(camY-camPY)*a}
+ for(const o of ALL)L(o);if(REF)L(REF);L(puck,1);
+ try{draw()}finally{camX=cx;camY=cy;for(const o of ALL){if(o._x!==undefined){o.x=o._x;o.y=o._y}}if(REF&&REF._x!==undefined){REF.x=REF._x;REF.y=REF._y}if(puck._x!==undefined){puck.x=puck._x;puck.y=puck._y;puck.z=puck._z}}}
+function loop(n){let dt=Math.min(100,n-last);last=n;if(Math.abs(dt-STEP)<1.6)dt=STEP;/* lock to the screen on 60 Hz, so no frame gets 0 or 2 updates by accident */
+ let a=1;if(S.mode!='menu'&&!S.paused){acc+=dt;let k=0;while(acc>=STEP&&k<6){snap();update();acc-=STEP;k++}if(k==6)acc=0;a=clamp(acc/STEP,0,1)}else acc=0;
+ if(S.mode!='menu')drawLerp(a);requestAnimationFrame(loop)}
 fill();lab();fit();newTeams(0,1);buildRink();setDirs();placeFO(RL/2,CY);S.mode='menu';
-window.__H={txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
+window.__H={loop:(n)=>loop(n),txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
 requestAnimationFrame(loop);
 })();
 </script>
