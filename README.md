@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.21.0 · Glidende**
+**Aktuel version: Ishockey 0.21.1 · Afslutninger**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -36,6 +36,10 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.21.1 · Afslutninger
+- Computeren skyder altid, når den har pucken tæt foran dit mål. Det gør den efter et kort øjeblik, så pucken lige når at ligge på stokken.
+- Den farvede kant om holdnavnet ved mål er lidt tykkere, og der er lidt mere luft mellem bogstaverne, så de stadig står hver for sig.
 
 ### Ishockey 0.21.0 · Glidende
 - Spillet kører jævnt på alle skærme. Spillet regner stadig 60 gange i sekundet, men billederne imellem tegnes med spillere, puck og kamera placeret mellem to opdateringer. Derfor hakker det ikke på 90 og 120 Hz-skærme (nyere iPhones), og på 60 Hz får intet billede længere 0 eller 2 opdateringer ved et uheld.
