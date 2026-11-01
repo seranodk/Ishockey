@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.20.0 · Udspil**
+**Aktuel version: Ishockey 0.20.1 · Korte udspil**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -28,7 +28,7 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 - **2 spillere på ét tastatur (også Mac):**
   - Spiller 1 (grøn ring): piletaster, **højre Shift** skyder, **-** afleverer.
   - Spiller 2 (lyseblå ring): WASD, **F** skyder, **G** afleverer.
-- **Udspil fra målmanden:** Når din målmand griber pucken, viser en bjælke over ham, at du har cirka 2 sekunder. Tryk PASS, så spiller han pucken ud til en medspiller, helst en back ude ved siden. Hvis du peger med joysticket, går den den vej. Når tiden løber ud, bliver der face-off.
+- **Udspil fra målmanden:** Når din målmand griber pucken, viser en bjælke over ham, at du har cirka 2 sekunder. Tryk PASS, så spiller han pucken roligt ud til en af de to nærmeste medspillere, helst den der står ude ved siden. Hvis du peger med joysticket, går den den vej. Når tiden løber ud, bliver der face-off.
 - Den spiller, du styrer, har en grøn ring. Modstanderen med pucken har en grå skygge.
 
 ## Indstillinger
@@ -36,6 +36,10 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.20.1 · Korte udspil
+- Målmanden spiller kun pucken til en af de to nærmeste medspillere og vælger helst den, der står ude ved siden.
+- Udspillet er blødere: cirka 3 i fart mod 4–5,5 før. Det kommer stadig næsten altid frem.
 
 ### Ishockey 0.20.0 · Udspil
 - Når målmanden griber pucken, holder han den i cirka 2 sekunder, før der bliver face-off. En lille bjælke over ham tæller ned.
