@@ -1,4 +1,4 @@
-<title>Ishockey 0.18.5</title>
+<title>Ishockey 0.19.0</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -52,7 +52,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.18.5 · Ny menu</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.19.0 · Vinkler</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -101,7 +101,7 @@ const S={mode:'menu',t:0,period:1,clock:0,len:7200,score:[0,0],shots:[0,0],msg:'
 const TM=[{dir:1,sk:[],gk:null,kit:null,club:null},{dir:-1,sk:[],gk:null,kit:null,club:null}];
 let ALL=[],puck={x:RL/2,y:CY,z:0,vx:0,vy:0,vz:0,owner:null,lastT:0,lastP:null,ice:[false,false],hist:[],net:null,target:null,tgT:0},REF=null;
 const ctl=[null,null],IN=[{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0},{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0}];
-const DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.25,.15,.08],GQ=[{r:4.2,s:1.0,d:18},{r:5,s:1.2,d:13},{r:6.2,s:1.5,d:8}],GH={r:5.6,s:1.4,d:9},AIERR=[.2,.14,.09];
+const DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.12,.06,.02],GQ=[{r:5,s:1.05,d:17},{r:5.9,s:1.25,d:12},{r:7.1,s:1.55,d:7}],GH={r:6.4,s:1.45,d:8},AIERR=[.2,.14,.09];
 let camX=(WW-VW)/2,camY=0,shake=0;
 const goal=t=>TM[t].dir>0?{gx:GLN,face:1,x0:GLN-ND,x1:GLN,y0:CY-GWH,y1:CY+GWH}:{gx:RL-GLN,face:-1,x0:RL-GLN,x1:RL-GLN+ND,y0:CY-GWH,y1:CY+GWH};
 const atkX=t=>TM[t].dir>0?RL-GLN:GLN;
@@ -141,14 +141,16 @@ function setOwner(p){puck.owner=p;puck.target=null;puck.tgT=0;puck.lastT=p.t;puc
 function oneTimer(p){const gp=goalPoint(p,1,true);shoot(p,.85,gp)}
 function release(p,dx,dy,sp,vz){const[bx,by]=blade(p),m=hyp(dx,dy)||1;dx/=m;dy/=m;puck.owner=null;puck.target=null;puck.tgT=0;puck.x=bx;puck.y=by;puck.vx=dx*sp+p.vx*.3;puck.vy=dy*sp+p.vy*.3;puck.z=.3;puck.vz=vz;puck.lastT=p.t;puck.lastP=p;p.cool=14;p.hold=0;
  puck.ice=[false,false];puck.ice[p.t]=uOf(p.x,p.t)<.5;puck.from=p.t;puck.hum=false;puck.gmiss=null}
-function goalPoint(p,pw,hum){const t=p.t,gx=atkX(t),side=rnd()<.5?-1:1;return[gx,CY+side*(hum?GWH-2-rnd()*3:GWH-rnd()*14)]}
-function shoot(p,pw,aim){let dx,dy;const I=ctl[0]===p?IN[0]:ctl[1]===p?IN[1]:null;
+function goalPoint(p,pw,hum){const t=p.t,gx=atkX(t),off=p.y-CY,side=hum&&Math.abs(off)>22?(rnd()<.75?-Math.sign(off):Math.sign(off)):(rnd()<.5?-1:1);return[gx,CY+side*(hum?GWH-4-rnd()*3:GWH-rnd()*14)]}
+function shoot(p,pw,aim){let sideB=0;let dx,dy;const I=ctl[0]===p?IN[0]:ctl[1]===p?IN[1]:null;
  if(aim){dx=aim[0]-p.x;dy=aim[1]-p.y}else{const m=I?hyp(I.x,I.y):0;if(m>.3){dx=I.x;dy=I.y}else{dx=Math.cos(p.fa);dy=Math.sin(p.fa)}
   const gx=atkX(p.t),gdx=gx-p.x,gdy=CY-p.y,dg=hyp(gdx,gdy),ang=Math.acos(clamp((dx*gdx+dy*gdy)/((hyp(dx,dy)||1)*dg),-1,1));
   // aim assist for human players: a shot roughly toward goal is steered at a corner
-  if(I&&gdx*TM[p.t].dir>0&&ang<1&&dg<360){const f=clamp(1-ang/1,0,1)*clamp(1-(dg-150)/260,.5,1),pr=AA[OPT.diff]*clamp(.4+f,0,1);if(rnd()<pr){const gp=goalPoint(p,pw,true);dx=gp[0]-p.x;dy=gp[1]-p.y}}}
+  /* from the side: the more open the angle to the goal, the more the shot is helped onto the net */
+  const open=Math.abs(Math.atan2(gdy,Math.abs(gdx)));sideB=open>.45&&open<1.2?.3:0;
+  if(I&&gdx*TM[p.t].dir>0&&ang<1+sideB&&dg<360){const f=clamp(1-ang/(1+sideB),0,1)*clamp(1-(dg-150)/260,.5,1),pr=sideB?Math.max(.9,AA[OPT.diff]):AA[OPT.diff]*clamp(.4+f,0,1);if(rnd()<pr){const gp=goalPoint(p,pw,true);dx=gp[0]-p.x;dy=gp[1]-p.y}}}
  const aiE=OPT.two?.03+.09*pw:AIERR[OPT.diff]+.06*pw,a=Math.atan2(dy,dx)+(rnd()-.5)*(I?.02+.04*pw:aiE)*2;S.shots[p.t]++;const lift=rnd()<.35?1.35:1;
- release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I;p.swing=10;puck.trail=[];sfx.shot()}
+ release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I;puck.fromSide=!!I&&sideB>0;p.swing=10;puck.trail=[];sfx.shot()}
 /* passing: aim at where the receiver will be, and mark the receiver so they collect it */
 function passTo(p,q,aimx,aimy){let dx,dy,sp;
  if(q){const d=hyp(q.x-p.x,q.y-p.y);sp=clamp(3+d*.012,3.4,5.4);const t=d/sp*.8;let tx=q.x+q.vx*t,ty=q.y+q.vy*t;tx=clamp(tx,10,RL-10);ty=clamp(ty,10,RW-10);dx=tx-p.x;dy=ty-p.y}
@@ -214,7 +216,9 @@ function goalie(G){const t=G.t,gd=goal(t),cfg=gcfg(t),q=puck;
  if(G.anim){if(--G.anim.n<=0)G.anim=null}
  if(!G.anim&&!q.owner&&q.net==null&&q.z<2.5&&S.mode=='play'){const sp=hyp(q.vx,q.vy),dd=hyp(q.x-G.x,q.y-G.y);if(sp>2.6&&dd<34&&q.vx*gd.face<0)G.anim={t:'bfly',n:16,side:q.y>G.y?1:-1}}
  if(S.mode!='play'||q.owner||q.z>7||q.gmiss===G)return;
- const R=cfg.r+(hyp(q.x-G.x,q.y-G.y)<28?1.6:0)-(q.hum?1.6:0),d=hyp(q.x-G.x,q.y-G.y);
+ /* a shot across the crease to the far post makes the goalie move sideways, so he covers a bit less */
+ const cross=q.hum&&q.fromSide?1:0;
+ const R=cfg.r+(hyp(q.x-G.x,q.y-G.y)<28?1.6:0)-(q.hum?1.6:0)-cross,d=hyp(q.x-G.x,q.y-G.y);
  if(d<R){if(q.hum){q.hum=false;if(rnd()<GMISS[OPT.diff]){q.gmiss=G;return}}const sp2=hyp(q.vx,q.vy);if(sp2<.15)return;puck.ice=[false,false];puck.lastT=t;puck.lastP=G;puck.target=null;
   const catchP=sp2<2?.8:sp2<4?.4:.22;
   const hi=q.z>1.8,side=q.y>G.y?1:-1;
