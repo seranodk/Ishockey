@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.19.0 · Vinkler**
+**Aktuel version: Ishockey 0.20.0 · Udspil**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -28,6 +28,7 @@ I **Kamp** og **2 spillere** vælger du først liga (Metal Ligaen, NHL eller Fan
 - **2 spillere på ét tastatur (også Mac):**
   - Spiller 1 (grøn ring): piletaster, **højre Shift** skyder, **-** afleverer.
   - Spiller 2 (lyseblå ring): WASD, **F** skyder, **G** afleverer.
+- **Udspil fra målmanden:** Når din målmand griber pucken, viser en bjælke over ham, at du har cirka 2 sekunder. Tryk PASS, så spiller han pucken ud til en medspiller, helst en back ude ved siden. Hvis du peger med joysticket, går den den vej. Når tiden løber ud, bliver der face-off.
 - Den spiller, du styrer, har en grøn ring. Modstanderen med pucken har en grå skygge.
 
 ## Indstillinger
@@ -35,6 +36,13 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.20.0 · Udspil
+- Når målmanden griber pucken, holder han den i cirka 2 sekunder, før der bliver face-off. En lille bjælke over ham tæller ned.
+- Tryk PASS i det vindue, så spiller målmanden pucken ud til en medspiller. Den går helst ud mod siderne og næsten aldrig lige ud foran mål. Peger du med joysticket, vælger han medspilleren i den retning.
+- Udspillene rammer næsten altid: Modstanderne kan stort set ikke opsnappe dem. I testen kom 40 af 40 frem.
+- De to backer skøjter ud til hver sin side og gør sig spilbare, mens målmanden holder pucken. Modstanderne trækker sig tilbage.
+- Computerens målmand spiller også selv pucken ud, som regel efter cirka et sekund.
 
 ### Ishockey 0.19.0 · Vinkler
 - Målmanden er bedre: Han tager cirka 15 procentpoint flere af dine skud fra slottet (60 % mod 45 % før) og glipper sjældnere.
