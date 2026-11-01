@@ -1,4 +1,4 @@
-<title>Ishockey 0.21.1</title>
+<title>Ishockey 0.21.2</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -52,7 +52,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.1 · Afslutninger</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.2 · Nærmeste stolpe</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -151,7 +151,7 @@ function shoot(p,pw,aim){let sideB=0;let dx,dy;const I=ctl[0]===p?IN[0]:ctl[1]==
   const open=Math.abs(Math.atan2(gdy,Math.abs(gdx)));sideB=open>.45&&open<1.2?.3:0;
   if(I&&gdx*TM[p.t].dir>0&&ang<1+sideB&&dg<360){const f=clamp(1-ang/(1+sideB),0,1)*clamp(1-(dg-150)/260,.5,1),pr=sideB?Math.max(.9,AA[OPT.diff]):AA[OPT.diff]*clamp(.4+f,0,1);if(rnd()<pr){const gp=goalPoint(p,pw,true);dx=gp[0]-p.x;dy=gp[1]-p.y}}}
  const aiE=OPT.two?.03+.09*pw:AIERR[OPT.diff]+.06*pw,a=Math.atan2(dy,dx)+(rnd()-.5)*(I?.02+.04*pw:aiE)*2;S.shots[p.t]++;const lift=rnd()<.35?1.35:1;
- release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I;puck.fromSide=!!I&&sideB>0;p.swing=10;puck.trail=[];sfx.shot()}
+ release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I;puck.fromSide=!!I&&sideB>0;p.swing=10;{const gx=atkX(p.t),vx=puck.vx||1e-6,yg=puck.y+puck.vy*(gx-puck.x)/vx,off=p.y-CY;puck.nearPost=Math.abs(off)>18&&Math.sign(yg-CY)==Math.sign(off)}puck.trail=[];sfx.shot()}
 /* passing: aim at where the receiver will be, and mark the receiver so they collect it */
 function passTo(p,q,aimx,aimy,soft){let dx,dy,sp;
  if(q){const d=hyp(q.x-p.x,q.y-p.y);sp=soft?clamp(2.3+d*.008,2.5,3.2):clamp(3+d*.012,3.4,5.4);const t=d/sp*.8;let tx=q.x+q.vx*t,ty=q.y+q.vy*t;tx=clamp(tx,10,RL-10);ty=clamp(ty,10,RW-10);dx=tx-p.x;dy=ty-p.y}
@@ -237,8 +237,9 @@ function goalie(G){const t=G.t,gd=goal(t),cfg=gcfg(t),q=puck;
  if(!G.anim&&!q.owner&&q.net==null&&q.z<2.5&&S.mode=='play'){const sp=hyp(q.vx,q.vy),dd=hyp(q.x-G.x,q.y-G.y);if(sp>2.6&&dd<34&&q.vx*gd.face<0)G.anim={t:'bfly',n:16,side:q.y>G.y?1:-1}}
  if(S.mode!='play'||q.owner||q.held||q.z>7||q.gmiss===G)return;
  /* a shot across the crease to the far post makes the goalie move sideways, so he covers a bit less */
- const cross=q.hum&&q.fromSide?1:0;
- const R=cfg.r+(hyp(q.x-G.x,q.y-G.y)<28?1.6:0)-(q.hum?1.6:0)-cross,d=hyp(q.x-G.x,q.y-G.y);
+ /* the near post is the goalie's job: he covers it better; far-post shots across the crease stay harder */
+ const cross=q.hum&&q.fromSide&&!q.nearPost?1:0,near=q.nearPost?1:0;
+ const R=cfg.r+(hyp(q.x-G.x,q.y-G.y)<28?1.6:0)-(q.hum?1.6:0)-cross+near,d=hyp(q.x-G.x,q.y-G.y);
  if(d<R){if(q.hum){q.hum=false;if(rnd()<GMISS[OPT.diff]){q.gmiss=G;return}}const sp2=hyp(q.vx,q.vy);if(sp2<.15)return;puck.ice=[false,false];puck.lastT=t;puck.lastP=G;puck.target=null;
   const catchP=sp2<2?.8:sp2<4?.4:.22;
   const hi=q.z>1.8,side=q.y>G.y?1:-1;
@@ -362,7 +363,7 @@ function finish(){S.mode='end';S.over=true;if(S.tour){tourResult();return}$('res
 const GL={A:'111101111101101',B:'110101110101110',C:'111100100100111',D:'110101101101110',E:'111100110100111',F:'111100110100100',G:'111100101101111',H:'101101111101101',I:'111010010010111',J:'001001001101111',K:'101101110101101',L:'100100100100111',M:'101111111101101',N:'111101101101101',O:'111101101101111',P:'111101111100100',Q:'111101101111001',R:'110101110101101',S:'111100111001111',T:'111010010010010',U:'101101101101111',V:'101101101101010',W:'101101111111101',X:'101101010101101',Y:'101101010010010',Z:'111001010100111','0':'111101101101111','1':'010110010010111','2':'111001111100111','3':'111001111001111','4':'101101111001001','5':'111100111001111','6':'111100111101111','7':'111001001001001','8':'111101111101111','9':'111101111001111',':':'000010000010000','-':'000000111000000','.':'000000000000010','!':'010010010000010','/':'001001010100100'};
 /* same pixel font, letters spaced a little wider and drawn with a 1-pixel outline in a second colour */
 /* same pixel font: white letters, each letter outlined in one of the team's two colours, alternating */
-function txtO(s,x,y,edges,sc){s=String(s);const ow=Math.max(1.5,Math.round(1.6*SK)/SK),adv=5.5*sc,w=s.length*adv-2.5*sc;const x0=Math.round(x-w/2);y=Math.round(y);let cx=x0,li=0;
+function txtO(s,x,y,edges,sc){s=String(s);const ow=Math.max(2,Math.round(2.3*SK)/SK),adv=6*sc,w=s.length*adv-3*sc;const x0=Math.round(x-w/2);y=Math.round(y);let cx=x0,li=0;
  const letters=[];for(const ch of s){const k=ch=='Å'?'A':ch=='Ø'?'O':ch,gl=GL[k],cells=[];if(gl)for(let i=0;i<15;i++)if(gl[i]=='1')cells.push([cx+(i%3)*sc,y+((i/3)|0)*sc]);if(cells.length)letters.push([cells,edges[li++%edges.length]]);cx+=adv}
  g.fillStyle='rgba(2,5,42,.45)';for(const[c]of letters)for(const[a,b]of c)g.fillRect(a+2,b+2,sc,sc);
  for(const[c,e]of letters){g.fillStyle=e;for(const[a,b]of c)g.fillRect(a-ow,b-ow,sc+2*ow,sc+2*ow)}
