@@ -1,4 +1,4 @@
-<title>Ishockey 0.21.3</title>
+<title>Ishockey 0.21.4</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -55,7 +55,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.3 · Ingen zoom</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.4 · Tacklinger</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -105,7 +105,7 @@ const S={mode:'menu',t:0,period:1,clock:0,len:7200,score:[0,0],shots:[0,0],msg:'
 const TM=[{dir:1,sk:[],gk:null,kit:null,club:null},{dir:-1,sk:[],gk:null,kit:null,club:null}];
 let ALL=[],puck={x:RL/2,y:CY,z:0,vx:0,vy:0,vz:0,owner:null,lastT:0,lastP:null,ice:[false,false],hist:[],net:null,target:null,tgT:0},REF=null;
 const ctl=[null,null],IN=[{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0},{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0}];
-const DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.12,.06,.02],GQ=[{r:5,s:1.05,d:17},{r:5.9,s:1.25,d:12},{r:7.1,s:1.55,d:7}],GH={r:6.4,s:1.45,d:8},AIERR=[.2,.14,.09];
+const TKMISS=.25,DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.12,.06,.02],GQ=[{r:5,s:1.05,d:17},{r:5.9,s:1.25,d:12},{r:7.1,s:1.55,d:7}],GH={r:6.4,s:1.45,d:8},AIERR=[.2,.14,.09];
 let camX=(WW-VW)/2,camY=0,shake=0;
 const goal=t=>TM[t].dir>0?{gx:GLN,face:1,x0:GLN-ND,x1:GLN,y0:CY-GWH,y1:CY+GWH}:{gx:RL-GLN,face:-1,x0:RL-GLN,x1:RL-GLN+ND,y0:CY-GWH,y1:CY+GWH};
 const atkX=t=>TM[t].dir>0?RL-GLN:GLN;
@@ -221,7 +221,9 @@ function puckStep(){const q=puck;
    if(rs<4.4||mateSide||rnd()<(rs<7?.55:.2)){if(rs<4.4||mateSide||rnd()<.85)setOwner(best);else{q.vx*=.5;q.vy*=.5;best.cool=6}}
    else{q.vx*=.6;q.vy*=.6;q.vx+=(rnd()-.5)*1.2;q.vy+=(rnd()-.5)*1.2;best.cool=8;q.ice=[false,false];q.lastT=best.t;q.target=null}}}}
 }
-function stealStep(){const q=puck,o=q.owner;if(!o||S.mode!='play')return;for(const e of ALL){if(e.t==o.t||e.gk||e.stun>0||e.cool>0)continue;const[bx,by]=blade(e),d=hyp(q.x-bx,q.y-by);if(d>8)continue;const hi=ctl.indexOf(e),poke=hi>=0&&IN[hi].a;let pr=poke?.22:(hi>=0?0:.012*DSH[OPT.diff]);if(rnd()<pr){q.owner=null;const a=Math.atan2(q.y-e.y,q.x-e.x);q.vx=Math.cos(a)*1.6+e.vx*.4;q.vy=Math.sin(a)*1.6+e.vy*.4;o.cool=20;e.cool=0;q.lastT=e.t;q.lastP=e;q.ice=[false,false];beep(200,.05,'square',.04);return}}}
+function stealStep(){const q=puck,o=q.owner;if(!o||S.mode!='play')return;for(const e of ALL){if(e.t==o.t||e.gk||e.stun>0||e.cool>0)continue;const[bx,by]=blade(e),d=hyp(q.x-bx,q.y-by);if(d>8)continue;const hi=ctl.indexOf(e),poke=hi>=0&&IN[hi].a;let pr=poke?.22:(hi>=0?0:.012*DSH[OPT.diff]);if(rnd()<pr){
+ /* a computer tackle is one attempt: it lunges in and misses 1 time in 4, then needs a moment before it can try again */
+ if(hi<0){e.chk=6;if(rnd()<TKMISS){e.cool=42;e.stun=8;S.tkMiss=(S.tkMiss||0)+1;continue}S.tkHit=(S.tkHit||0)+1}q.owner=null;const a=Math.atan2(q.y-e.y,q.x-e.x);q.vx=Math.cos(a)*1.6+e.vx*.4;q.vy=Math.sin(a)*1.6+e.vy*.4;o.cool=20;e.cool=0;q.lastT=e.t;q.lastP=e;q.ice=[false,false];beep(200,.05,'square',.04);return}}}
 /* ---------- goals ---------- */
 /* after a goal the scorer swings off towards the boards and his teammates skate over to him; the other team glides to a stop */
 function celebrate(){const sc=S.scorer;if(!sc)return;for(const t of[0,1])for(const p of sk(t)){if(t!=S.goalBy){p.ix*=.0;p.iy*=.0;continue}
@@ -739,74 +741,3 @@ requestAnimationFrame(loop);
 /* block zoom gestures that touch-action alone does not stop (iOS pinch, double-tap, ctrl+wheel) */
 (()=>{const no=e=>e.preventDefault(),o={passive:false};for(const t of['gesturestart','gesturechange','gestureend'])document.addEventListener(t,no,o);document.addEventListener('touchmove',e=>{if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault()},o);document.addEventListener('dblclick',no,o);addEventListener('wheel',e=>{if(e.ctrlKey)e.preventDefault()},o);let lt=0;document.addEventListener('touchend',e=>{const n=performance.now(),t=e.target;if(n-lt<320&&!(t.closest&&t.closest('button,select,input,label,.tb,#zoneL'))){e.preventDefault()}lt=n},o)})();
 </script>
-<!-- spillehal-knap: knap tilbage til seranodk.github.io, kun synlig i hovedmenuen -->
-<style>
-#spillehalKnap{position:fixed;z-index:2147483000;top:calc(env(safe-area-inset-top,0px) + 10px);right:calc(env(safe-area-inset-right,0px) + 10px);
-  display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;
-  font:600 13px/1.1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:0;text-transform:none;
-  color:#fff;background:rgba(12,14,22,.72);border:1px solid rgba(255,255,255,.35);text-decoration:none;
-  box-shadow:0 2px 10px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;white-space:nowrap}
-#spillehalKnap:hover{background:rgba(12,14,22,.88)}
-#spillehalKnap:focus-visible{outline:2px solid #ffd23f;outline-offset:2px}
-#spillehalKnap[hidden]{display:none!important}
-</style>
-<a id="spillehalKnap" href="https://seranodk.github.io/" hidden>&larr; Tilbage til spillehallen</a>
-<script>
-(function(){
-  var MENU='#pg-main', URL='https://seranodk.github.io/';
-  var k=document.getElementById('spillehalKnap'); if(!k) return;
-  ['pointerdown','mousedown','touchstart','click','keydown'].forEach(function(t){
-    k.addEventListener(t,function(e){e.stopPropagation();},{passive:true});});
-  k.addEventListener('pointerup',function(){location.href=URL;});
-  function synlig(el){
-    if(!el||!el.isConnected) return false;
-    if(el.checkVisibility) return el.checkVisibility({opacityProperty:true,visibilityProperty:true});
-    var r=el.getBoundingClientRect(); if(r.width<2||r.height<2) return false;
-    for(var e=el;e&&e.nodeType===1;e=e.parentElement){var s=getComputedStyle(e);
-      if(s.display==='none'||s.visibility==='hidden'||+s.opacity<0.05) return false;}
-    return true;
-  }
-  /* ryk ned under knapper eller bokse, der allerede står oppe til højre */
-  function forhindringer(){
-    var vw=innerWidth, vh=innerHeight, ud=[];
-    var alle=document.body.getElementsByTagName('*');
-    for(var i=0;i<alle.length;i++){var e=alle[i];
-      if(e===k||k.contains(e)||e.contains(k)) continue;
-      var b=e.getBoundingClientRect();
-      if(b.width<4||b.height<4||b.top>90||b.right<vw*0.4||b.width*b.height>vw*vh*0.3) continue;
-      var s=getComputedStyle(e);
-      var aktiv=/^(BUTTON|A|SELECT|INPUT|CANVAS|IMG|SVG)$/i.test(e.tagName)||e.getAttribute('role')==='button';
-      var flade=!/rgba\(0, 0, 0, 0\)|transparent/.test(s.backgroundColor)||s.backgroundImage!=='none'||parseFloat(s.borderTopWidth)>0;
-      if(!(aktiv||flade)) continue;
-      if(e.checkVisibility&&!e.checkVisibility({opacityProperty:true,visibilityProperty:true})) continue;
-      if(s.position!=='fixed'&&s.position!=='absolute'&&s.position!=='sticky'&&!aktiv&&b.width>vw*0.8) continue;
-      /* skjult bag et menu-lag (fx ikoner bag et halvgennemsigtigt overlay)? så tæller den ikke */
-      var stak=document.elementsFromPoint?document.elementsFromPoint(Math.min(vw-1,b.left+b.width/2),Math.min(vh-1,b.top+b.height/2)):[];
-      var top=null; for(var j=0;j<stak.length;j++){ if(stak[j]!==k&&!k.contains(stak[j])){top=stak[j];break;} }
-      if(top&&top.tagName!=='CANVAS'&&top!==e&&!e.contains(top)&&!top.contains(e)){var tb=top.getBoundingClientRect(); if(tb.width*tb.height>vw*vh*0.3) continue;}
-      ud.push(b);
-    }
-    return ud;
-  }
-  function placer(){
-    k.style.top=''; var bokse=forhindringer();
-    for(var n=0;n<6;n++){
-      var r=k.getBoundingClientRect(), ny=0;
-      bokse.forEach(function(b){ if(b.left<r.right&&b.right>r.left&&b.top<r.bottom&&b.bottom>r.top) ny=Math.max(ny,b.bottom); });
-      if(!ny) break;
-      k.style.top=(ny+8)+'px';
-    }
-  }
-  var var_synlig=false;
-  var tik=0;
-  function tjek(){
-    var vis=synlig(document.querySelector(MENU));
-    if(vis!==var_synlig){var_synlig=vis; k.hidden=!vis; if(vis) placer();}
-    else if(vis&&++tik%4===0) placer();   /* menuen kan ændre sig, mens den er åben */
-  }
-  setInterval(tjek,250); addEventListener('resize',function(){if(var_synlig) placer();});
-  tjek();
-})();
-</script>
-<!-- /spillehal-knap -->
