@@ -1,4 +1,4 @@
-<title>Ishockey 0.22.0</title>
+<title>Ishockey 0.22.1</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -56,7 +56,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.22.0 · Lukket slot</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.22.1 · Slot i balance</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -106,7 +106,8 @@ const S={mode:'menu',t:0,period:1,clock:0,len:7200,score:[0,0],shots:[0,0],msg:'
 const TM=[{dir:1,sk:[],gk:null,kit:null,club:null},{dir:-1,sk:[],gk:null,kit:null,club:null}];
 let ALL=[],puck={x:RL/2,y:CY,z:0,vx:0,vy:0,vz:0,owner:null,lastT:0,lastP:null,ice:[false,false],hist:[],net:null,target:null,tgT:0},REF=null;
 const ctl=[null,null],IN=[{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0},{x:0,y:0,a:0,aP:0,aR:0,b:0,bP:0}];
-const TKMISS=.25,GLEAK=.02,DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.12,.06,.02],GQ=[{r:5,s:1.05,d:17},{r:5.9,s:1.25,d:12},{r:7.1,s:1.55,d:7}],GH={r:6.4,s:1.45,d:8},AIERR=[.2,.14,.09];
+/* slot defence strength: gap min/max, step-up speed, check chance, how far the centre drops in (0 = not at all) */
+let SG=[22,34,.8,.006,0,20,8,6,.5];const TKMISS=.25,GLEAK=.02,DSP=[.88,.95,1.02],DSH=[.6,1,1.4],AA=[.9,.75,.6],GMISS=[.12,.06,.02],GQ=[{r:5,s:1.05,d:17},{r:5.9,s:1.25,d:12},{r:7.1,s:1.55,d:7}],GH={r:6.4,s:1.45,d:8},AIERR=[.2,.14,.09];
 let camX=(WW-VW)/2,camY=0,shake=0;
 const goal=t=>TM[t].dir>0?{gx:GLN,face:1,x0:GLN-ND,x1:GLN,y0:CY-GWH,y1:CY+GWH}:{gx:RL-GLN,face:-1,x0:RL-GLN,x1:RL-GLN+ND,y0:CY-GWH,y1:CY+GWH};
 const atkX=t=>TM[t].dir>0?RL-GLN:GLN;
@@ -266,6 +267,8 @@ function goTo(p,tx,ty,f){const dx=tx-p.x,dy=ty-p.y,d=hyp(dx,dy);const k=clamp(d/
 function meetPuck(p,f){const q=puck,L=hyp(p.x-q.x,p.y-q.y)/3;goTo(p,q.x+q.vx*L,q.y+q.vy*L,f)}
 /* a carrier inside our half of the zone, between the face-off dots, on his way to the net */
 function slotThreat(c,t){if(!c||c.t==t||c.gk)return false;const gd=goal(t),fw=(c.x-gd.gx)*gd.face;return fw>0&&fw<215&&Math.abs(c.y-CY)<78}
+/* each time a carrier gets the puck it is decided once whether the defence closes the slot on him; about half the time it does */
+let SLOT={c:null,on:false};function slotOn(c){if(SLOT.c!==c||SLOT.k!==S.cf-1&&S.cf-SLOT.k>1){SLOT.on=rnd()<SG[8]}SLOT.c=c;SLOT.k=S.cf;return SLOT.on}
 function aiSkater(p){const t=p.t,q=puck;
  if(S.gkHold&&S.gkHold.G.t==t&&(p.role=='LD'||p.role=='RD')){const gd=goal(t),sy=p.role=='LD'?-1:1;goTo(p,gd.gx+gd.face*48,CY+sy*82,1);return}
  if(q.owner===p){aiCarrier(p);return}
@@ -278,13 +281,14 @@ function aiSkater(p){const t=p.t,q=puck;
  /* defending a carrier who comes at the net through the middle, as in real hockey:
     the strong-side back steps up and plays him on the inside (between him and the net, a stick length away, pushing him wide),
     the other back collapses to the front of the net, and the centre drops into the high slot. */
- if(theirs&&slotThreat(q.owner,t)){const c=q.owner,gd=goal(t),dG=hyp(c.x-gd.gx,c.y-CY),L=8,ex=c.x+c.vx*L,ey=c.y+c.vy*L;
+ if(theirs&&slotThreat(q.owner,t)&&slotOn(q.owner)){const c=q.owner,gd=goal(t),dG=hyp(c.x-gd.gx,c.y-CY),L=SG[7],ex=c.x+c.vx*L,ey=c.y+c.vy*L;
   if(p.role=='LD'||p.role=='RD'){const o=sk(t).find(m=>m!==p&&(m.role=='LD'||m.role=='RD')),dp=hyp(p.x-c.x,p.y-c.y),dq=hyp(o.x-c.x,o.y-c.y);
    const up=ch===o?o:(ch===p?p:(dp<=dq?p:o));
-   if(up===p){const ux=gd.gx-ex,uy=CY-ey,m=hyp(ux,uy)||1,gap=clamp(dG*.1,10,20);goTo(p,ex+ux/m*gap,ey+uy/m*gap+(CY-ey)*.12,1);
-    if(hyp(p.x-c.x,p.y-c.y)<14&&p.chkCd<=0&&rnd()<.02*DSH[OPT.diff])doCheck(p);return}
-   goTo(p,gd.gx+gd.face*clamp(dG*.22,20,34),CY+clamp((c.y-CY)*.3,-11,11),1);return}
-  if(p.role=='C'&&ch!==p){const k=clamp(.5-40/Math.max(dG,60),.12,.42);goTo(p,gd.gx+(ex-gd.gx)*k,CY+(ey-CY)*k,1);return}}
+   if(up===p){const ux=gd.gx-ex,uy=CY-ey,m=hyp(ux,uy)||1,gap=clamp(dG*.14,SG[0],SG[1]);goTo(p,ex+ux/m*gap,ey+uy/m*gap+(CY-ey)*.06,SG[2]);
+    if(hyp(p.x-c.x,p.y-c.y)<14&&p.chkCd<=0&&rnd()<SG[3]*DSH[OPT.diff])doCheck(p);return}
+   /* the other back holds the weak-side post: protects the net front without standing right in the shooting lane */
+   const ws=c.y>=CY?-1:1;goTo(p,gd.gx+gd.face*clamp(dG*.1,13,SG[5]),CY+ws*SG[6],1);return}
+  if(p.role=='C'&&ch!==p&&SG[4]){const k=clamp(.5-40/Math.max(dG,60),.12,SG[4]);goTo(p,gd.gx+(ex-gd.gx)*k,CY+(ey-CY)*k,1);return}}
  let[tx,ty]=formation(p,mine||pass?'att':'def');
  for(const m of sk(t)){if(m===p)continue;const dx=p.x-m.x,dy=p.y-m.y,dd=hyp(dx,dy);if(dd<18&&dd>.1){tx+=dx/dd*(18-dd)*.8;ty+=dy/dd*(18-dd)*.8}}
  goTo(p,tx,ty,mine?.9:1)}
@@ -758,7 +762,7 @@ function loop(n){let dt=Math.min(100,n-last);last=n;if(Math.abs(dt-1000/60)<1.6)
  let a=1;if(S.mode!='menu'&&!S.paused){acc+=dt;let k=0;while(acc>=STEP&&k<6){snap();update();acc-=STEP;k++}if(k==6)acc=0;a=clamp(acc/STEP,0,1)}else acc=0;
  if(S.mode!='menu')drawLerp(a);requestAnimationFrame(loop)}
 fill();lab();fit();newTeams(0,1);buildRink();setDirs();placeFO(RL/2,CY);S.mode='menu';
-window.__H={shoot,setOwner,loop:(n)=>loop(n),txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
+window.__H={setSG:v=>{SG=v},shoot,setOwner,loop:(n)=>loop(n),txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
 requestAnimationFrame(loop);
 })();
 /* block zoom gestures that touch-action alone does not stop (iOS pinch, double-tap, ctrl+wheel) */
