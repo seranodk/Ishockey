@@ -1,4 +1,4 @@
-<title>Ishockey 0.21.8</title>
+<title>Ishockey 0.21.9</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
@@ -18,12 +18,13 @@ body{display:flex;align-items:center;justify-content:center;font:700 11px/1.6 'P
 #joy.idle{opacity:.38}
 #joy i{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#e9edf9,#9aa6d6);box-shadow:0 3px 8px #0008}
 .tb{position:absolute;pointer-events:auto;border-radius:50%;border:3px solid rgba(255,255,255,.65);background:rgba(255,255,255,.18);color:#fff;font:700 10px 'Press Start 2P','Courier New',monospace;display:flex;align-items:center;justify-content:center;text-align:center}
+.tb::after{content:'';position:absolute;inset:-8px;border-radius:50%} /* a touch just outside the ring still counts */
 .tb.dn{background:rgba(255,70,50,.55)}
-#bA{width:96px;height:96px;right:max(18px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px))}
-#bB{width:66px;height:66px;right:calc(max(18px,env(safe-area-inset-right,0px)) + 112px);bottom:max(14px,env(safe-area-inset-bottom,0px))}
+#bA{width:108px;height:108px;right:max(18px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px))}
+#bB{width:76px;height:76px;right:calc(max(18px,env(safe-area-inset-right,0px)) + 124px);bottom:max(14px,env(safe-area-inset-bottom,0px))}
 #bP{width:40px;height:40px;left:max(12px,env(safe-area-inset-left,0px));top:max(10px,env(safe-area-inset-top,0px));font-size:11px}
 /* portrait: the rink fills the top, controls sit in a strip at the bottom */
-@media (orientation:portrait){#zoneL{top:auto;height:240px;width:55%}#bA{width:84px;height:84px;bottom:max(14px,env(safe-area-inset-bottom,0px))}#bB{width:58px;height:58px;right:calc(max(18px,env(safe-area-inset-right,0px)) + 98px);bottom:max(10px,env(safe-area-inset-bottom,0px))}}
+@media (orientation:portrait){#zoneL{top:auto;height:240px;width:55%}#bA{width:94px;height:94px;bottom:max(14px,env(safe-area-inset-bottom,0px))}#bB{width:66px;height:66px;right:calc(max(18px,env(safe-area-inset-right,0px)) + 108px);bottom:max(10px,env(safe-area-inset-bottom,0px))}}
 #menu{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,#1c35d8 0,#0b1a9a 42%,#040a45 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px max(16px,env(safe-area-inset-left,0px));box-sizing:border-box;text-align:center;overflow:auto;z-index:5}
 #menu .pg{display:none;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:420px;margin:auto}
 .logo{display:flex;flex-direction:column;align-items:center;line-height:1;margin-bottom:2px}
@@ -55,7 +56,7 @@ small{font-size:9px;line-height:1.9;opacity:.9}.ct{text-align:left;max-width:380
 <div id="tc"><div id="zoneL"></div><div id="joy" class="idle"><i></i></div><div class="tb" id="bA">SKYD</div><div class="tb" id="bB">PASS</div><div class="tb" id="bP">II</div></div>
 <div id="pause"><div class="pg"><div class="hd" style="width:100%;box-sizing:border-box">PAUSE</div><button class="bb" id="pres">FORTSÆT</button><button class="rd" id="pquit">AFSLUT KAMP</button></div></div>
 <div id="menu">
-<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.8 · Jævn bevægelse</small><div id="res"></div>
+<div class="pg" id="pg-main" style="display:flex"><div class="logo"><span class="l2">ISHOCKEY</span></div><small id="ver">Ishockey 0.21.9 · Løs puck</small><div id="res"></div>
 <button class="gb" id="btnFS" hidden>FULD SKÆRM</button><div class="grid"><button class="tile gr" id="topt" style="grid-column:1/3"><i>&#9881;</i>INDSTILLINGER</button><button class="tile" id="t1p"><i>&#127954;</i>KAMP</button><button class="tile" id="t2p"><i>&#128101;</i>2 SPILLERE</button><button class="tile rdt" id="tcup" style="grid-column:1/3"><i>&#127942;</i>TURNERINGER<b>Metal Liga · NHL</b></button><button class="tile bl" id="thur" style="grid-column:1/3"><i>&#127922;</i>HURTIG KAMP</button></div><small id="installHint" hidden>Spil i fuld skærm som en app: åbn spillet i Safari eller Chrome og vælg Føj til hjemmeskærm.</small></div>
 <div class="pg" id="pg-sel"><div class="hd" id="cname">VÆLG HOLD</div><div class="row"><span>LIGA</span><select id="lg"></select></div><div class="row"><span id="lab0">DIG</span><select id="s0"></select><div class="kit" id="k0"><i></i></div></div><div class="row"><span id="lab1">MOD</span><select id="s1"></select><div class="kit" id="k1"><i></i></div></div><small id="keys2" class="ct" hidden>SP1: piletaster + Shift skyd, - pass<br>SP2: WASD + F skyd, G pass</small><button class="gb" id="rnd">TILFÆLDIGE HOLD</button><button class="gb" id="oset">INDSTILLINGER</button><button class="bb" id="go">START KAMP</button><button class="rd" id="back">TILBAGE</button></div>
 <div class="pg" id="pg-cup"><div class="hd">TURNERINGER</div><button class="tile rdt" id="tdk" style="width:100%"><i>&#127942;</i>METAL LIGAEN<b>DM-slutspil</b></button><button class="tile rdt" id="tnhl" style="width:100%"><i>&#127942;</i>NHL<b>Stanley Cup</b></button><button class="rd" id="cupback">TILBAGE</button></div>
@@ -146,15 +147,18 @@ function oneTimer(p){const gp=goalPoint(p,1,true);shoot(p,.85,gp)}
 function release(p,dx,dy,sp,vz){const[bx,by]=blade(p),m=hyp(dx,dy)||1;dx/=m;dy/=m;puck.owner=null;puck.target=null;puck.tgT=0;puck.x=bx;puck.y=by;puck.vx=dx*sp+p.vx*.3;puck.vy=dy*sp+p.vy*.3;puck.z=.3;puck.vz=vz;puck.lastT=p.t;puck.lastP=p;p.cool=14;p.hold=0;
  puck.ice=[false,false];puck.ice[p.t]=uOf(p.x,p.t)<.5;puck.from=p.t;puck.hum=false;puck.gmiss=null;puck.gr=0}
 function goalPoint(p,pw,hum){const t=p.t,gx=atkX(t),off=p.y-CY,side=hum&&Math.abs(off)>22?(rnd()<.75?-Math.sign(off):Math.sign(off)):(rnd()<.5?-1:1);return[gx,CY+side*(hum?GWH-4-rnd()*3:GWH-rnd()*14)]}
-function shoot(p,pw,aim){let sideB=0;let dx,dy;const I=ctl[0]===p?IN[0]:ctl[1]===p?IN[1]:null;
+function shoot(p,pw,aim){let sideB=0,helped=0;let dx,dy;const I=ctl[0]===p?IN[0]:ctl[1]===p?IN[1]:null;
  if(aim){dx=aim[0]-p.x;dy=aim[1]-p.y}else{const m=I?hyp(I.x,I.y):0;if(m>.3){dx=I.x;dy=I.y}else{dx=Math.cos(p.fa);dy=Math.sin(p.fa)}
   const gx=atkX(p.t),gdx=gx-p.x,gdy=CY-p.y,dg=hyp(gdx,gdy),ang=Math.acos(clamp((dx*gdx+dy*gdy)/((hyp(dx,dy)||1)*dg),-1,1));
   // aim assist for human players: a shot roughly toward goal is steered at a corner
   /* from the side: the more open the angle to the goal, the more the shot is helped onto the net */
   const open=Math.abs(Math.atan2(gdy,Math.abs(gdx)));sideB=open>.45&&open<1.2?.3:0;
-  if(I&&gdx*TM[p.t].dir>0&&ang<1+sideB&&dg<360){const f=clamp(1-ang/(1+sideB),0,1)*clamp(1-(dg-150)/260,.5,1),pr=sideB?Math.max(.9,AA[OPT.diff]):AA[OPT.diff]*clamp(.4+f,0,1);if(rnd()<pr){const gp=goalPoint(p,pw,true);dx=gp[0]-p.x;dy=gp[1]-p.y}}}
+  if(I&&gdx*TM[p.t].dir>0&&ang<1+sideB&&dg<360){
+   /* a shot aimed on target is left alone. One aimed just wide is helped onto the net, but towards the middle where the goalie stands, so it goes in less often than a good shot */
+   const yg=p.y+dy*(gdx/(dx||1e-6)),onT=Math.abs(yg-CY)<GWH-1.5;
+   if(!onT){const f=clamp(1-ang/(1+sideB),0,1),pr=sideB?.9:clamp(.35+f*.7,0,.95);if(rnd()<pr){const sd=Math.sign(yg-CY)||1,ty=CY+sd*GWH*(.12+rnd()*.38);dx=gx-p.x;dy=ty-p.y;helped=1}}}}
  const aiE=OPT.two?.03+.09*pw:AIERR[OPT.diff]+.06*pw,a=Math.atan2(dy,dx)+(rnd()-.5)*(I?.02+.04*pw:aiE)*2;S.shots[p.t]++;const lift=rnd()<.35?1.35:1;
- release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I;puck.fromSide=!!I&&sideB>0;p.swing=10;{const gx=atkX(p.t),vx=puck.vx||1e-6,yg=puck.y+puck.vy*(gx-puck.x)/vx,off=p.y-CY;puck.nearPost=Math.abs(off)>18&&Math.sign(yg-CY)==Math.sign(off)}puck.trail=[];sfx.shot()}
+ release(p,Math.cos(a),Math.sin(a),(I?3.5:3.1)+pw*2.7,(.3+pw*.85)*lift);puck.hum=!!I&&!helped;puck.fromSide=!!I&&sideB>0&&!helped;p.swing=10;{const gx=atkX(p.t),vx=puck.vx||1e-6,yg=puck.y+puck.vy*(gx-puck.x)/vx,off=p.y-CY;puck.nearPost=Math.abs(off)>18&&Math.sign(yg-CY)==Math.sign(off)}puck.trail=[];sfx.shot()}
 /* passing: aim at where the receiver will be, and mark the receiver so they collect it */
 function passTo(p,q,aimx,aimy,soft){let dx,dy,sp;
  if(q){const d=hyp(q.x-p.x,q.y-p.y);sp=soft?clamp(2.3+d*.008,2.5,3.2):clamp(3+d*.012,3.4,5.4);const t=d/sp*.8;let tx=q.x+q.vx*t,ty=q.y+q.vy*t;tx=clamp(tx,10,RL-10);ty=clamp(ty,10,RW-10);dx=tx-p.x;dy=ty-p.y}
@@ -192,6 +196,8 @@ function puckStep(){const q=puck;
   if(q.y<gd.y0+1.5){q.y=gd.y0+1.5;q.vy=Math.abs(q.vy)*.2}if(q.y>gd.y1-1.5){q.y=gd.y1-1.5;q.vy=-Math.abs(q.vy)*.2}return}
  if(q.owner){const p=q.owner;if(p.stun>0||S.mode=='goal'){q.owner=null;return}const[bx,by]=blade(p);q.x+=(bx-q.x)*.34;q.y+=(by-q.y)*.34;q.z=0;q.vx=p.vx;q.vy=p.vy;return}
  if(q.tgT>0&&--q.tgT<=0)q.target=null;
+ /* a pass that has gone past its man, or is dying out before reaching him, is a loose puck: his team chases it again */
+ if(q.target&&!q.owner){const T=q.target,dx=T.x-q.x,dy=T.y-q.y,d=hyp(dx,dy),sp=hyp(q.vx,q.vy);if(d>12&&((q.vx*dx+q.vy*dy)<0||sp<1.1))q.target=null}
  const px=q.x,py=q.y;q.x+=q.vx;q.y+=q.vy;q.z+=q.vz;q.vz-=.1;
  if(q.z<=0){q.z=0;q.vz=q.vz<-.7?-q.vz*.35:0}
  const f=q.z>0?.998:.993;q.vx*=f;q.vy*=f;if(hyp(q.vx,q.vy)<.02){q.vx=q.vy=0}
@@ -740,7 +746,7 @@ function loop(n){let dt=Math.min(100,n-last);last=n;if(Math.abs(dt-1000/60)<1.6)
  let a=1;if(S.mode!='menu'&&!S.paused){acc+=dt;let k=0;while(acc>=STEP&&k<6){snap();update();acc-=STEP;k++}if(k==6)acc=0;a=clamp(acc/STEP,0,1)}else acc=0;
  if(S.mode!='menu')drawLerp(a);requestAnimationFrame(loop)}
 fill();lab();fit();newTeams(0,1);buildRink();setDirs();placeFO(RL/2,CY);S.mode='menu';
-window.__H={loop:(n)=>loop(n),txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
+window.__H={shoot,setOwner,loop:(n)=>loop(n),txt,setAnim:a=>{ANIM=a},passTo,arena:()=>[STANDS,ICE],S,TM,puck,ALL,OPT,IN,ctl,update,draw,startMatch,toS,placeFO,goal,get camY(){return camY},get camX(){return camX}};
 requestAnimationFrame(loop);
 })();
 /* block zoom gestures that touch-action alone does not stop (iOS pinch, double-tap, ctrl+wheel) */

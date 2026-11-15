@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.21.8 · Jævn bevægelse**
+**Aktuel version: Ishockey 0.21.9 · Løs puck**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -36,6 +36,11 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.21.9 · Løs puck
+- Fejlaflevering: når en aflevering er gået forbi modtageren eller dør ud før ham, er pucken løs igen. Så går den nærmeste medspiller efter den i stedet for at fortsætte sin vej.
+- Skud: et skud, der er rettet lidt ved siden af målet, bliver hjulpet ind på mål, men mod midten, hvor målmanden står. Et velrettet skud bliver ikke ændret og går oftere ind. Målt fra slottet: velrettet går 36 % ind, lidt forbi 22 % og et godt stykke forbi 18 %.
+- SKYD- og PASS-knapperne er cirka 12 % større, og et tryk lige uden for ringen tæller også.
 
 ### Ishockey 0.21.8 · Jævn bevægelse
 - Spillet hakker ikke længere i det roligere tempo. Skærmen tegnes 60 gange i sekundet, og nu flytter skøjteskridt, retning og hældning sig i hvert eneste billede. Før stod de stille i cirka hvert tiende. Tempoet er det samme som i 0.21.7.
