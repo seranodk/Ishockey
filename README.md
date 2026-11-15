@@ -2,7 +2,7 @@
 
 Top-down ishockey i retro arkade-stil på en lodret bane. Spillet kører i browseren på både mobil og computer. Det hele ligger i én `index.html` uden afhængigheder.
 
-**Aktuel version: Ishockey 0.21.6 · Stærkere målmand**
+**Aktuel version: Ishockey 0.21.7 · Roligere tempo**
 
 ## Spil som app (fuld skærm)
 Åbn spillet via GitHub Pages på mobilen og vælg **Føj til hjemmeskærm**. I Safari ligger den under Del-knappen, i Chrome under menuen ⋮. Så starter spillet i fuld skærm uden browserlinje, med sit eget ikon, og det kan spilles offline. På Android går spillet også i fuld skærm, når en kamp starter, og der er en knap til fuld skærm i hovedmenuen. Du kan spille med telefonen både på højkant og på tværs.
@@ -36,6 +36,9 @@ Sværhedsgrad (Let/Normal/Svær) · Periodelængde (1–3 min) · Icing og offsi
 
 ## Versioner
 Navngivning: **Ishockey 0.x.x · Navn**. En større ændring hæver første x, en mindre ændring hæver andet x, og hver version får et navn. Hver version udkommer både som HTML (`index.html` og `game.html`, og som `ishockey-0.x.x.html`) og som artifact, og versionsnummeret står i titlen på begge.
+
+### Ishockey 0.21.7 · Roligere tempo
+- Hele spillet kører 10 % langsommere: spillere, puck, målmænd og dommer. Så er det nemmere at følge med. Perioderne varer stadig lige så længe på uret.
 
 ### Ishockey 0.21.6 · Stærkere målmand
 - Målmanden er igen stærkere, for begge hold. 0.21.5 gav for mange mål. Nu lukker han kun cirka 2 % ekstra skud ind i forhold til før 0.21.5 (mod 8 % i 0.21.5). I en simulering gik 11 % af skuddene i mål, mod 14 % i 0.21.5 og 9-10 % før.
